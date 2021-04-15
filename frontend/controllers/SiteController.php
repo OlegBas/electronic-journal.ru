@@ -94,10 +94,14 @@ class SiteController extends Controller
         } else {
             $model->password = '';
 
-            return $this->render('login', [
+            return $this->render('subject', [
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionSubject(){
+        return $this->render('subject');
     }
 
     /**

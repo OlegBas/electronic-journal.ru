@@ -36,9 +36,11 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Главная', 'url' => ['/site/index']],
+        ['label' => 'Ученики', 'url' => ['/site/pupils']],
+        ['label' => 'Учителя', 'url' => ['/site/teachers']],
+        ['label' => 'Отчеты', 'url' => ['/site/reports']],
+        ['label' => 'Выход', 'url' => ['/site/logout']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -58,7 +60,7 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
     NavBar::end();
-    ?>
+    ?> 
 
     <div class="container">
         <?= Breadcrumbs::widget([
