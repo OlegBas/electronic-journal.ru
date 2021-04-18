@@ -23,6 +23,8 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    public $session;
     public function behaviors()
     {
         return [
@@ -51,6 +53,19 @@ class SiteController extends Controller
         ];
     }
 
+    
+
+
+public function beforeAction($action)
+{
+    // echo $action->id;
+    $this->session = Yii::$app->session;
+     return parent::beforeAction($action);
+    // return false;
+}
+
+    
+
     /**
      * {@inheritdoc}
      */
@@ -74,6 +89,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        // echo Yii::$app->user->identity->username;
+         echo Yii::$app->user->id; 
         return $this->render('index');
     }
 
@@ -82,23 +99,25 @@ class SiteController extends Controller
      *
      * @return mixed
      */
+   
+       
     public function actionLogin()
     {
+        
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) 
+            && $model->login()) {
             return $this->goBack();
-        } else {
-            $model->password = '';
-
-            return $this->render('subject', [
-                'model' => $model,
-            ]);
         }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
+    
 
     public function actionSubject(){
         return $this->render('subject');
@@ -111,8 +130,15 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        echo 123;
+        // Yii::$app->user->logout();
 
+        // return $this->goHome();
+    }
+
+    public function actionExit()
+    {
+        $this->session->remove('user');
         return $this->goHome();
     }
 

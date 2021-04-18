@@ -42,14 +42,16 @@ AppAsset::register($this);
         ['label' => 'Отчеты', 'url' => ['/site/reports']],
         ['label' => 'Выход', 'url' => ['/site/logout']],
     ];
-    if (Yii::$app->user->isGuest) {
+    $session = Yii::$app->session;
+    // print_r($session->get('user'));
+    if (!$session->has('user')) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
+            . Html::beginForm(['/site/exit'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout (' . $session->get('user')->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
