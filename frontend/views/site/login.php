@@ -14,7 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Пожалуйста, заполните следующие поля для авторизации :</p>
-    
+    <?php
+        if($model->hasErrors()) {?>
+        <p style = 'color:red'><?=$model->getFirstErrors('errorAuth')['errorAuth']?></p>
+    <?php }?>
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>

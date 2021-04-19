@@ -40,18 +40,16 @@ AppAsset::register($this);
         ['label' => 'Ученики', 'url' => ['/site/pupils']],
         ['label' => 'Учителя', 'url' => ['/site/teachers']],
         ['label' => 'Отчеты', 'url' => ['/site/reports']],
-        ['label' => 'Выход', 'url' => ['/site/logout']],
     ];
     $session = Yii::$app->session;
     // print_r($session->get('user'));
     if (!$session->has('user')) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/exit'], 'post')
+            . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . $session->get('user')->username . ')',
+                'Выход (' . $session->get('user')->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

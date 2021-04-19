@@ -25,33 +25,33 @@ class SiteController extends Controller
      */
 
     public $session;
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'access' => [
+    //             'class' => AccessControl::className(),
+    //             'only' => ['logout', 'signup'],
+    //             'rules' => [
+    //                 [
+    //                     'actions' => ['signup'],
+    //                     'allow' => true,
+    //                     'roles' => ['?'],
+    //                 ],
+    //                 // [
+    //                 //     'actions' => ['logout'],
+    //                 //     'allow' => true,
+    //                 //     'roles' => ['@'],
+    //                 // ],
+    //             ],
+    //         ],
+    //         'verbs' => [
+    //             'class' => VerbFilter::className(),
+    //             // 'actions' => [
+    //             //     'logout' => ['post'],
+    //             // ],
+    //         ],
+    //     ];
+    // }
 
     
 
@@ -90,7 +90,7 @@ public function beforeAction($action)
     public function actionIndex()
     {
         // echo Yii::$app->user->identity->username;
-         echo Yii::$app->user->id; 
+        // echo $this->session->get("user")->username;
         return $this->render('index');
     }
 
@@ -130,17 +130,10 @@ public function beforeAction($action)
      */
     public function actionLogout()
     {
-        echo 123;
-        // Yii::$app->user->logout();
-
-        // return $this->goHome();
-    }
-
-    public function actionExit()
-    {
         $this->session->remove('user');
         return $this->goHome();
     }
+
 
     /**
      * Displays contact page.

@@ -23,7 +23,7 @@ class LoginForm extends Model
             // username and password are both required
             [['username', 'password'], 'required','message' => 'Заполните поле {attritube}! '],
             // rememberMe must be a boolean value
-            ['password', 'validatePassword'],
+            ['password', 'validateAuth'],
 
         ];
     }
@@ -36,12 +36,12 @@ class LoginForm extends Model
         ];
     }
 
-    public function validatePassword($attribute, $params)
+    public function validateAuth($attribute, $params)
     {
         if (!$this->hasErrors()) {
             if(!$this->getUser())
             {
-           $this->addError($attribute, 'Неверный пароль');
+           $this->addError("errorAuth", 'Неверный логин и/или пароль');
             } 
         }
     }
@@ -53,8 +53,12 @@ class LoginForm extends Model
      */
     public function login()
     {
+        $session = Yii::$app->session;
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser());
+            $session->set("user",$this->getUser());
+            Yii::$app->user->login($this->getUser());
+            return true;
+             
         }
     }
 
