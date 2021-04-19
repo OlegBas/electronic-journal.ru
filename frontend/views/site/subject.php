@@ -7,7 +7,7 @@ $this->params['breadcrumbs'][] = "Иванов Иван Иванович";
 $this->params['breadcrumbs'][] = "Математика";
 ?>
 
-<h3>Иванов Иван Иванович/ Математика</h3>
+<h3><?=$user->fio?>/ <?=$subject?></h3>
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -18,11 +18,11 @@ $this->params['breadcrumbs'][] = "Математика";
   <tbody>
     <tr>
       <td scope="col">Cредний балл</td>
-      <td scope="col">4.6</td>
+      <td scope="col"><?=array_sum($gradesArr) / count($gradesArr)?></td>
     </tr>
     <tr>
       <td scope="col">Оценки</td>
-      <td scope="col">4,3,5,4,5,5</td>
+      <td scope="col"><?=implode(",",$gradesArr)?></td>
     </tr>
     <tr>
       <td scope="col">Cредний балл</td>

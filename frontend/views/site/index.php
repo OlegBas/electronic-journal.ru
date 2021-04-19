@@ -19,14 +19,13 @@ $this->title = 'Главная';
     </tr>
   </thead>
   <tbody>
+  <?php foreach($peoples as $people) {?>
+
     <tr>
-      <th scope="row">1</th>
-      <td>   <a href="/site/about">Mark</a></td>
+      <th scope="row"><?=$people->id?></th>
+      <td>   <a href="/site/about"><?=$people->fio?></a></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td> <a href="/site/about">Jacob</a></td>
-    </tr>
+  <?php }?>
   </tbody>
 </table>
 <nav aria-label="Page navigation example">

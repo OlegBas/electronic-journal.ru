@@ -24,6 +24,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
+//TODO layout main.php
 <?php $this->beginBody() ?>
 
 <div class="wrap">

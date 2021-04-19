@@ -17,15 +17,11 @@ $this->params['breadcrumbs'][] = "Иванов Иван Иванович";
     </tr>
   </thead>
   <tbody>
+  <?php foreach($subjects as $subject) {?>
     <tr>
-      <td>   <a href="/site/about">Русский язык</a></td>
+      <td>   <a href="/site/about"><?=$subject->title?></a></td>
     </tr>
-    <tr>
-      <td> <a href="/site/about">Математика</a></td>
-    </tr>
-    <tr>
-      <td> <a href="/site/about">Физика</a></td>
-    </tr>
+  <?php }?>
   </tbody>
 </table>
 
