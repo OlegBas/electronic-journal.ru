@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-
+use yii\helpers\Url;
 $this->title = 'Главная';
 ?>
 <nav aria-label="breadcrumb">
@@ -23,7 +23,7 @@ $this->title = 'Главная';
 
     <tr>
       <th scope="row"><?=$people->id?></th>
-      <td>   <a href="/site/about"><?=$people->fio?></a></td>
+      <td>   <a href="<?=Url::to(['site/subject', 'id' => $people->id]);?>"><?=$people->fio?></a></td>
     </tr>
   <?php }?>
   </tbody>

@@ -17,6 +17,8 @@ use frontend\models\ContactForm;
 use frontend\models\User;
 use frontend\models\Subject;
 use frontend\models\Grade;
+use yii\data\Pagination;
+use yii\helpers\Url;
 
 /**
  * Site controller
@@ -32,6 +34,10 @@ public function beforeAction($action)
 {
     // echo $action->id;
     $this->session = Yii::$app->session;
+    if($action->id != "login" && !$this->session->has('user'))
+        return $this->redirect(Url::to(['site/login']));
+    elseif($action->id == "login" && $this->session->has('user'))
+        return $this->goHome();
      return parent::beforeAction($action);
     // return false;
 }
@@ -61,11 +67,12 @@ public function beforeAction($action)
      */
     public function actionIndex()
     {
-        $peoples = User::find()->where(['role' => 'pupil'])->all();
-        // echo Yii::$app->user->identity->username;
-        // echo $this->session->get("user")->username;
+        $peoples = User::find()->where(['role' => 'pupil'])->all();;
+
+
+
         return $this->render('index', [
-            'peoples' => $peoples
+            'peoples' => $peoples,
         ]); 
     }
 
