@@ -11,7 +11,9 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $user = false;
+    public $rememberMe = true;
+
+    private $_user;
 
 
     /**
@@ -21,28 +23,28 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required','message' => 'Заполните поле {attritube}! '],
+            [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
-            ['password', 'validateAuth'],
-
+            ['rememberMe', 'boolean'],
+            // password is validated by validatePassword()
+            ['password', 'validatePassword'],
         ];
     }
 
-    public  function attributeLabels()
-    {
-        return [
-            'username' => 'Имя пользователя',
-            'password' => 'Пароль',
-        ];
-    }
-
-    public function validateAuth($attribute, $params)
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            if(!$this->getUser())
-            {
-           $this->addError("errorAuth", 'Неверный логин и/или пароль');
-            } 
+            $user = $this->getUser();
+            if (!$user) {
+                $this->addError($attribute, 'Incorrect username or password.');
+            }
         }
     }
 
@@ -53,25 +55,26 @@ class LoginForm extends Model
      */
     public function login()
     {
-        $session = Yii::$app->session;
         if ($this->validate()) {
-            $session->set("user",$this->getUser());
-            Yii::$app->user->login($this->getUser());
-            return true;
-             
+            return Yii::$app->user->login($this->getUser());
         }
+        
+        return false;
     }
 
-
-    public function getUser()
+    /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    protected function getUser()
     {
-      if ($this->user === false) {
-    $this->user = User::findOne(['username'=>$this->username, 
-                                  'password'=>md5($this->password)]);
-      }
-           
-     return $this->user;
-   }
+        // echo $this->username;
+        // echo md5($this->password);
+        if ($this->_user === null) {
+            $this->_user = User::findByUsername($this->username,$this->password);
+        }
 
-
+        return $this->_user;
+    }
 }

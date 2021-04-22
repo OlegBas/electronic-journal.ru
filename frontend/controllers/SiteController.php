@@ -1,19 +1,13 @@
 <?php
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use frontend\models\LoginForm;
 use frontend\models\User;
 use frontend\models\Subject;
 use frontend\models\Grade;
@@ -67,6 +61,7 @@ public function beforeAction($action)
      */
     public function actionIndex()
     {
+        
         $peoples = User::find()->where(['role' => 'pupil'])->all();;
 
 
@@ -85,7 +80,7 @@ public function beforeAction($action)
        
     public function actionLogin()
     {
-        
+        //echo Yii::$app->params['adminEmail'];
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

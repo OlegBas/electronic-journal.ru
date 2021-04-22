@@ -41,11 +41,12 @@ return [
         ],
         
         // 'urlManager' => [
-        //     'enablePrettyUrl' => true,
+        //     'class' => 'yii\web\UrlManager',
+        //     'enablePrettyUrl' => false,
         //     'showScriptName' => false,
-        //     'enableStrictParsing' => false,
         //     'rules' => [
-        //         //  '/' => 'site/login'
+        //         //   '' => 'site/login',
+        //         // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
         //     ],
         // ],
         
