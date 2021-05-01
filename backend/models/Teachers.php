@@ -41,9 +41,9 @@ class Teachers extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'fio' => 'Fio',
-            'dateOfBirth' => 'Date Of Birth',
-            'idSubject' => 'Id Subject',
+            'fio' => 'ФИО',
+            'dateOfBirth' => 'дата рождения',
+            'idSubject' => 'ID предмета',
         ];
     }
 }

@@ -42,11 +42,11 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idSubject' => 'Id Subject',
-            'idUser' => 'Id User',
-            'idTeacher' => 'Id Teacher',
-            'grade' => 'Grade',
-            'date' => 'Date',
+            'idSubject' => 'ID предмета',
+            'idUser' => 'ID пользователя',
+            'idTeacher' => 'ID Учителя',
+            'grade' => 'Оценка',
+            'date' => 'Дата выставления',
         ];
     }
 }

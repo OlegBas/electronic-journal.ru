@@ -40,15 +40,15 @@ return [
             'errorAction' => 'site/error',
         ],
         
-        // 'urlManager' => [
-        //     'class' => 'yii\web\UrlManager',
-        //     'enablePrettyUrl' => false,
-        //     'showScriptName' => false,
-        //     'rules' => [
-        //         //   '' => 'site/login',
-        //         // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-        //     ],
-        // ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => false,
+            'showScriptName' => false,
+            'rules' => [
+                //   '' => 'site/login',
+                // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ],
+        ],
         
     ],
     'params' => $params,
