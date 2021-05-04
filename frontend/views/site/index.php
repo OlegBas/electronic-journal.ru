@@ -10,25 +10,25 @@ $this->title = 'Главная';
     <li class="breadcrumb-item active" aria-current="page">Ученики</li>
   </ol>
 </nav>
-<h3>Список учеников</h3>
+<h3>Список предметов</h3>
 <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ФИО</th>
+      <th scope="col">Наименование</th>
     </tr>
   </thead>
   <tbody>
-  <?php foreach($peoples as $people) {?>
+  <?php foreach($subjects as $subject) {?>
 
     <tr>
-      <th scope="row"><?=$people->id?></th>
-      <td>   <a href="<?=Url::to(['site/subject', 'id' => $people->id]);?>"><?=$people->fio?></a></td>
+      <th scope="row"><?=$subject->id?></th>
+      <td>   <a href="<?=Url::to(['site/subject', 'id' => $subject->id]);?>"><?=$subject->title?></a></td>
     </tr>
   <?php }?>
   </tbody>
 </table>
-<nav aria-label="Page navigation example">
+<!-- <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
@@ -44,4 +44,4 @@ $this->title = 'Главная';
       </a>
     </li>
   </ul>
-</nav>
+</nav> -->

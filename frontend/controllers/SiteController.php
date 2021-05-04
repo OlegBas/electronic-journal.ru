@@ -62,22 +62,12 @@ public function beforeAction($action)
     public function actionIndex()
     {
         
-        $peoples = User::find()->where(['role' => 'pupil'])->all();;
-
-
-
+        $subjects = Subject::find()->all();
         return $this->render('index', [
-            'peoples' => $peoples,
+            'subjects' => $subjects,
         ]); 
     }
 
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-   
-       
     public function actionLogin()
     {
         //echo Yii::$app->params['adminEmail'];
@@ -98,8 +88,9 @@ public function beforeAction($action)
 
     public function actionSubject(){
         $user = Yii::$app->session->get('user');
-        $grades = Grade::find()->where(['idSubject' => 1,'idUser' => $user->id])->all();
-        $subject = 'Русский язык';
+        $idSelectSubject = Yii::$app->request->get("id");
+        $grades = Grade::find()->where(['idSubject' => $idSelectSubject,'idUser' => $user->id])->all();
+        $subject = Subject::find()->where(['id' => $idSelectSubject ])->one();
         $gradesArr = [];
         foreach($grades as $grade){
             $gradesArr[] = $grade->grade;

@@ -25,7 +25,6 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
-//TODO layout main.php
 <?php $this->beginBody() ?>
 
 <div class="wrap">
@@ -38,10 +37,8 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Главная', 'url' => ['/site/index']],
-        ['label' => 'Ученики', 'url' => ['/site/pupils']],
-        ['label' => 'Учителя', 'url' => ['/site/teachers']],
-        ['label' => 'Отчеты', 'url' => ['/site/reports']],
+        ['label' => 'Электронный журнал', 'url' => ['/site/index']],
+        ['label' => 'Личный кабинет', 'url' => ['/site/lk']],
     ];
     $session = Yii::$app->session;
     // print_r($session->get('user'));
@@ -73,13 +70,7 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>
