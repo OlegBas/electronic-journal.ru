@@ -30,16 +30,12 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => "Электронный журнал",
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse ',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Электронный журнал', 'url' => ['/site/index']],
-        ['label' => 'Личный кабинет', 'url' => ['/site/lk']],
-    ];
+
     $session = Yii::$app->session;
     // print_r($session->get('user'));
     if (!$session->has('user')) {
@@ -62,9 +58,7 @@ AppAsset::register($this);
     ?> 
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+       
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

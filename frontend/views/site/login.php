@@ -10,22 +10,6 @@ use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
 
 $this->title = 'Авторизация';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = [
-    'label'=> '123', 
-    'url'=>Url::toRoute('/photo/'.$articleAlias),
-];
-?>
-<?php
-echo Breadcrumbs::widget([
- 'itemTemplate' => "<li><i>{link}</i></li>\n",
-    'homeLink' => [
-        'label' => 'Главная ',
-        'url' => Yii::$app->homeUrl,
-        'title' => '',
-    ],
-    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-]);
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>

@@ -13,6 +13,13 @@ use frontend\models\Subject;
 use frontend\models\Grade;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use frontend\models\Peoples;
+use frontend\models\Classes;
+use frontend\models\Teachers;
+use frontend\models\Peopleparents;
+use frontend\models\Parents;
+use frontend\models\Plans;
+
 
 /**
  * Site controller
@@ -61,7 +68,14 @@ public function beforeAction($action)
      */
     public function actionIndex()
     {
+
+        // print_r($this->session->get("user"));
+        // print_r($this->session->get("userInfo"));
+        // print_r($this->session->get("userRole"));
+        // print_r($this->session->get("classPeople"));
+        print_r($this->session->get("parentsPeople"));
         
+
         $subjects = Subject::find()->all();
         return $this->render('index', [
             'subjects' => $subjects,

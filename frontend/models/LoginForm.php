@@ -3,6 +3,11 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use frontend\models\Peoples;
+use frontend\models\Teachers;
+use frontend\models\Classes;
+use frontend\models\Peopleparents;
+use frontend\models\Parents;
 
 /**
  * Login form
@@ -55,7 +60,31 @@ class LoginForm extends Model
     {
         $session = Yii::$app->session;
         if ($this->validate()) {
-            $session->set("user",$this->getUser());
+            $user =  $this->getUser();
+            $userRole = $user->role;
+            
+            if($userRole == "pupil") {
+                $userInfo = Peoples::find()->where(['idusers' => $user->id])->one();
+                $classPeople = Classes::find()->select(['title'])->where(['id' => $userInfo->idClass])->one();
+                $session->set("classPeople",$classPeople);
+    
+                $idsPeopleparents = Peopleparents::find()->select(['id'])->where(['idPeople' => $user->id])->asArray()->all();
+                $ids = [];
+                for ($i=0; $i < count($idsPeopleparents); $i++)  
+                    $ids[] = $idsPeopleparents[$i]['id'];
+
+                $parents = Parents::findAll($ids);
+                $session->set("parentsPeople",$parents);
+               
+            }
+            else {
+                $userInfo = Teachers::find()->where(['idusers' => $user->id])->one();
+                $session->set("subjects","");
+            }
+
+            $session->set("user",$user);
+            $session->set("userInfo",$userInfo);
+            $session->set("userRole",$userRole);
             Yii::$app->user->login($this->getUser());
             return true;
              
