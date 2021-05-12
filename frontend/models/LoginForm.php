@@ -61,6 +61,7 @@ class LoginForm extends Model
         $session = Yii::$app->session;
         if ($this->validate()) {
             $user =  $this->getUser();
+            
             $userRole = $user->role;
             
             if($userRole == "pupil") {

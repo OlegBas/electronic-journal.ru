@@ -29,6 +29,9 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
 
+        public function afterFind(){
+            
+        }
     /**
      * {@inheritdoc}
      */
@@ -37,15 +40,7 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+   
 
     /**
      * {@inheritdoc}
@@ -53,6 +48,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+           [ ['username','email','password','role','fio','phone','dateOfBirth','address','photo'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];

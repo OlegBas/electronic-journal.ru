@@ -19,6 +19,7 @@ use frontend\models\Teachers;
 use frontend\models\Peopleparents;
 use frontend\models\Parents;
 use frontend\models\Plans;
+use frontend\models\UserForm;
 
 
 /**
@@ -70,15 +71,41 @@ public function beforeAction($action)
     {
 
         // print_r($this->session->get("user"));
-        // print_r($this->session->get("userInfo"));
+        $user = $this->session->get("user");
+        $userInfo =  $this->session->get("userInfo");
         // print_r($this->session->get("userRole"));
         // print_r($this->session->get("classPeople"));
-        print_r($this->session->get("parentsPeople"));
+        // print_r($this->session->get("parentsPeople"));
+        $model  = new UserForm();
+        if ($model->load(Yii::$app->request->post())){
+            $user =  User::findOne($user->id);
+            if($model->fio) $user->fio = $model->fio;
+            if($model->dateOfBirth) $user->dateOfBirth = $model->dateOfBirth;
+            if($model->email) $user->email = $model->email;
+            if($model->phone) $user->phone = $model->phone;
+            if($model->password) $user->password = md5($model->password);
+            $user->save();
+        }
         
-
+        if($user) {
+            $peopleAge = Yii::$app->db->createCommand("SELECT dateOfBirth,((YEAR(CURRENT_DATE) - YEAR(dateOfBirth)) - /* step 1 */ (DATE_FORMAT(CURRENT_DATE, '%m%d') < DATE_FORMAT(dateOfBirth, '%m%d')) /* step 2 */) AS age FROM user WHERE `id` = ".$user->id)->queryOne();
+            $fioClRuk = User::find()->select(["fio"])->where(['id' => $userInfo->idClRuk])->asArray()->one();
+            $avgGrade = Grade::find()->select(["AVG(mark)"])->where(['idPeople' => $user->id])->asArray()->one();
+        }
+         // echo $age;
+        
         $subjects = Subject::find()->all();
+        
         return $this->render('index', [
             'subjects' => $subjects,
+            'user' => $this->session->get("user"),
+            'userRole' =>$this->session->get("userRole"),
+            'classPeople' =>$this->session->get("classPeople"),
+            'parentsPeople' =>$this->session->get("parentsPeople"),
+            'peopleAge' => $peopleAge["age"],
+            'fioClRuk' => $fioClRuk["fio"],
+            'avgGrade' => $avgGrade['AVG(mark)'],
+            'model' => $model,
         ]); 
     }
 

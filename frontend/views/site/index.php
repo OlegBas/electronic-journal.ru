@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 $this->title = 'Электронный журнал - ученик';
 ?>
 
@@ -22,61 +24,57 @@ $this->title = 'Электронный журнал - ученик';
                   <table class = "table">
                     <tr>
                       <td><b>ФИО</b></td>
-                      <td>Иванов Петр Иванович</td>
+                      <td><?=$user->fio?></td>
                       
                     </tr>
                     <tr>
                       <td><b>Дата рождения</b></td>
-                      <td>19.01.2004 г</td>
+                      <td><?=$user->dateOfBirth?></td>
                     </tr>
                     <tr>
                       <td><b>Возвраст</b></td>
-                      <td>10 лет</td>
+                      <td><?=$peopleAge?> лет</td>
                     </tr>
                     <tr>
                       <td><b>Адрес</b></td>
-                      <td>Строителей д. 18 кв.3</td>
+                      <td><?=$user->address?></td>
                     </tr>
                     <tr>
                       <td><b>Класс</b></td>
-                      <td>5В</td>
+                      <td><?=$classPeople->title?></td>
                     </tr>
                     <tr>
                       <td><b>ФИО классного руководителя</b></td>
-                      <td>Арсеньтева Ирина Сергеевна</td>
+                      <td><?=$fioClRuk?></td>
                     </tr>
                     <tr>
                       <td><b>Номер телефона:</b></td>
                       <td>
-                         +7 (928) 144 589 20
+                      <?=$user->phone?>
                       </td>
                     </tr>
                     <tr>
                       <td><b>Номер телефона родителей</b></td>
                       <td>
-                        <b>мать:</b>  +7 (928) 144 589 96<br>
-                        <b>отец:</b>+7 (928) 144 589 97
+                        <b>мать:</b>  <?=$parentsPeople[1]->phone?><br>
+                        <b>отец:</b><?=$parentsPeople[0]->phone?>
                       </td>
                     </tr>
                     <tr>
                       <td><b>ФИО родителей </b></td>
                       <td>
-                        <b>мать:</b> Иванова Клавдия Петровна<br>
-                        <b>отец:</b> Иванов Сергей Викторович
+                        <b>мать:</b> <?=$parentsPeople[1]->fio?><br>
+                        <b>отец:</b> <?=$parentsPeople[0]->fio?>
                       </td>
                     </tr>
                     <tr>
                       <td><b>Средний балл обучения</b></td>
-                      <td>4,5</td>
+                      <td><?=$avgGrade?></td>
                     </tr>
                     <tr>
                       <td><b>E-mail</b></td>
-                      <td>ivanov@mail.ru</td>
+                      <td><?=$user->email?></td>
   
-                    </tr>
-                    <tr>
-                      <td><b>Пароль</b></td>
-                      <td>******</td>
                     </tr>
                   </table>
                   <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editPrivateInfo">
@@ -90,31 +88,16 @@ $this->title = 'Электронный журнал - ученик';
                           <h4 class="modal-title">Личный данные/Изменить</h4>
                         </div>
                         <div class="modal-body">
-                          <form role="form">
-                            <div class="form-group">
-                              <label for="exampleInputFio">ФИО</label>
-                              <input type="email" class="form-control" id="exampleInputFio" placeholder="Введите ФИО ">
-                            </div>
-
-                            <div class="form-group">
-                              <label for="exampleInputAge">Дата рождения:</label>
-                              <input type="date" class="form-control" id="exampleInputAge" placeholder="Введите дату рождения">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputAge">Номер телефона:</label>
-                              <input type="phone" class="form-control" id="exampleInputPhone" placeholder="Введите номер телефона">
-                            </div>
-
-                            <div class="form-group">
-                              <label for="exampleInputEmail1">Email:</label>
-                              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Введите email">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputPassword1">Пароль:</label>
-                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
-                            </div>
-                            <button type="button" class="btn btn-primary">Сохранить</button>
-                          </form>
+                          <?php $form = ActiveForm::begin([
+                            'id' => 'lkdata-form',
+                          ]) ?>
+                            <?= $form->field($model, 'fio')->textInput(['placeholder' => 'Введите ФИО'])?>
+                            <?= $form->field($model, 'dateOfBirth')->input('date') ?>
+                            <?= $form->field($model, 'email')->input('email') ?>
+                            <?= $form->field($model, 'phone')->input('tel') ?>
+                            <?= $form->field($model, 'password')->input('password') ?>
+                            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+                          <?php ActiveForm::end() ?>
                         </div>
                       </div>
                     </div>
