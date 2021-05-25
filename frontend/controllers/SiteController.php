@@ -62,6 +62,26 @@ public function beforeAction($action)
         ];
     }
 
+
+    private function  num_word($value, $words, $show = true) 
+    {
+        $num = $value % 100;
+        if ($num > 19) { 
+            $num = $num % 10; 
+        }
+        
+        $out = ($show) ?  $value . ' ' : '';
+        switch ($num) {
+            case 1:  $out .= $words[0]; break;
+            case 2: 
+            case 3: 
+            case 4:  $out .= $words[1]; break;
+            default: $out .= $words[2]; break;
+        }
+        
+        return $out;
+    }
+
     /**
      * Displays homepage.
      *
@@ -76,6 +96,7 @@ public function beforeAction($action)
         // print_r($this->session->get("userRole"));
         // print_r($this->session->get("classPeople"));
         // print_r($this->session->get("parentsPeople"));
+
         $model  = new UserForm();
         if ($model->load(Yii::$app->request->post())){
             $user =  User::findOne($user->id);
@@ -102,9 +123,9 @@ public function beforeAction($action)
             'userRole' =>$this->session->get("userRole"),
             'classPeople' =>$this->session->get("classPeople"),
             'parentsPeople' =>$this->session->get("parentsPeople"),
-            'peopleAge' => $peopleAge["age"],
+            'peopleAge' => $peopleAge["age"]." ".$this->num_word($peopleAge["age"] ,['года','года','лет']),
             'fioClRuk' => $fioClRuk["fio"],
-            'avgGrade' => $avgGrade['AVG(mark)'],
+            'avgGrade' => number_format($avgGrade['AVG(mark)'],1),
             'model' => $model,
         ]); 
     }

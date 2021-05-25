@@ -25,7 +25,17 @@ class UserForm extends Model
     {
         return [
            [ ['username','email','password','role','fio','phone','dateOfBirth','address','photo'], 'safe'],
-           [ ['fio','email'],'required'],
+           [ ['fio'],'required', 'message' => 'Заполните поле "{attribute}"! '],
+        ];
+    }
+
+    public function attributeLabels(){
+        return [
+            'fio' => 'ФИО',
+            'dateOfBirth' => 'Дата рождения',
+            'email' => 'E-mail',
+            'password' => 'Пароль',
+            'phone' => 'Телефон',
         ];
     }
 }
