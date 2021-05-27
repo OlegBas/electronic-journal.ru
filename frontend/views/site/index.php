@@ -6,15 +6,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->title = 'Электронный журнал - ученик';
 ?>
+<?php
 
+
+
+
+?>
 <div class="container page">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <ul class="nav nav-tabs">
             <li  class="active"><a  data-toggle="tab" href="#lkInfo" aria-expanded="true">Личная информация</a></li>
             <li><a data-toggle="tab" href="#grades" >Успеваемость</a></li>
             <li><a data-toggle="tab" href="#timetable" >Рассписание уроков</a></li>
             <li><a data-toggle="tab" href="#plans" >Домашние задания</a></li>
+            <li><a data-toggle="tab" href="#aboutGroup" >Общие сведения о группе</a></li>
+            <li><a data-toggle="tab" href="#socialMapGroup" >Социальная карта группы</a></li>
+            <li><a data-toggle="tab" href="#busyGroup" >Досуговая занятость (секции)</a></li>
+            <li><a data-toggle="tab" href="#infoAboutStudent" >Сведения о студенте</a></li>
           </ul>
 
           <div class="tab-content">
@@ -106,6 +115,214 @@ $this->title = 'Электронный журнал - ученик';
               </div>
               
             </div>
+            <div class="tab-pane" id = "aboutGroup">
+            <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Учебный год</td>
+                <td>2021</td>
+              </tr>
+              <tr>
+                <td>ФИО руководителя</td>
+                <td><?=$classPeople->fioClRuk?></td>
+              </tr>
+
+              <tr>
+                <td>Количество студентов</td>
+                <td>Из них:</td>
+              </tr>
+              <tr>
+                <td>Юношей:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Девушек:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Староста группы:</td>
+                <td><?=$classPeople->prop1?></td>
+              </tr>
+              <tr>
+                <td>Заместитель старосты</td>
+                <td><?=$classPeople->prop2?></td>
+              </tr>
+              <tr>
+                <td>Председатель учебно-производственного сектора</td>
+                <td><?=$classPeople->prop3?></td>
+              </tr>
+              <tr>
+                <td>Председатель сектора дисциплины и порядка</td>
+                <td><?=$classPeople->prop4?></td>
+              </tr>
+              <tr>
+                <td>Председатель научно технического сектора</td>
+                <td><?=$classPeople->prop5?></td>
+              </tr>
+              <tr>
+                <td>Председатель спортивного сектора</td>
+                <td><?=$classPeople->prop6?></td>
+              </tr>
+              <tr>
+                <td>Председатель культурно-массового сектора</td>
+                <td><?=$classPeople->prop7?></td>
+              </tr>
+              <tr>
+                <td>Председатель информационно-издательского сектора</td>
+                <td><?=$classPeople->prop8?></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+            <div class="tab-pane" id = "socialMapGroup">
+            <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>Семья полная</th>
+                <th>Семья неполная</th>
+                <th>Многодетные</th>
+                <th>Беженцы переселенцы</th>
+                <th>Родители инвалиды</th>
+                <th>Дети инвалиды</th>
+                <th>Опекаемые</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php foreach($peoples as $onePeople) {?> 
+              <tr>
+                <td><?=$onePeople->id?></td>
+                <td><?=$onePeople->user->fio?></td>
+                <td><?=$onePeople->prop1?></td>
+                <td><?=$onePeople->prop2?></td>
+                <td><?=$onePeople->prop3?></td>
+                <td><?=$onePeople->prop4?></td>
+                <td><?=$onePeople->prop5?></td>
+                <td><?=$onePeople->prop6?></td>
+                <td><?=$onePeople->prop7?></td>
+              </tr>
+              <?php }?>
+            </tbody>
+          </table>
+            </div>
+            <div class="tab-pane" id = "busyGroup">
+            <table class="table table-bordered table-hover">
+            <thead>
+              
+              <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>Название секции</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php foreach($peoples as $people) {?>
+              <tr>
+                <td><?= $people->id?></td>
+                <td><?=$people->user->fio?></td>
+                <td><?=$people->prop11?></td>
+              </tr>
+              <?php }?>
+            </tbody>
+          </table>
+            </div>
+            <div class="tab-pane" id = "infoAboutStudent">
+            <table class="table table-condensed table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ФИО</td>
+                <td><?=$user->fio?></td>
+              </tr>
+              <tr>
+                <td>Дата рождения</td>
+                <td><?=$user->dateOfBirth?></td>
+              </tr>
+              <tr>
+                <td>Место жительства</td>
+                <td><?=$user->address?></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Родители:</th>
+                <th>Отец</th>
+                <th>Мать</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ФИО</td>
+                <td><?=$parentsPeople[0]["fio"]?></td>
+                <td><?=$parentsPeople[1]["fio"]?></td>
+              </tr>
+              <tr>
+                <td>место работы</td>
+                <td><?=$parentsPeople[0]["placeWork"]?></td>
+                <td><?=$parentsPeople[1]["placeWork"]?></td>
+              </tr>
+              <tr>
+                <td>адрес</td>
+                <td><?=$parentsPeople[0]["address"]?></td>
+                <td><?=$parentsPeople[1]["address"]?></td>
+              </tr>
+              <tr>
+                <td>телефон</td>
+                <td><?=$parentsPeople[0]["phone"]?></td>
+                <td><?=$parentsPeople[1]["phone"]?></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Состав семьи</td>
+                <td><?=$people->prop8?></td>
+              </tr>
+              <tr>
+                <td>Социальная активность, увлечения, интересы</td>
+                <td><?=$people->prop9?></td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Характеристика студента</h3>
+          <p>
+          <?=$people->prop10?>
+          </p>
+          <div id="diary">
+            <h3>Дневник работы в группе</h3>
+            <p>
+            <?=$people->prop12?>
+            </p>
+          </div>
+            </div>
+            
             <div class = "tab-pane" id="grades">
               <div class="row">
                 <div class="col-md-6">

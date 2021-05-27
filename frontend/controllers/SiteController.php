@@ -97,6 +97,11 @@ public function beforeAction($action)
         // print_r($this->session->get("classPeople"));
         // print_r($this->session->get("parentsPeople"));
 
+        $peoples = Peoples::find()
+            ->leftJoin('user','`peoples`.`idusers` = `user`.`id`')
+            ->with('user')
+            ->all();
+        // print_r($peoples);
         $model  = new UserForm();
         if ($model->load(Yii::$app->request->post())){
             $user =  User::findOne($user->id);
@@ -116,13 +121,16 @@ public function beforeAction($action)
          // echo $age;
         
         $subjects = Subject::find()->all();
-        
+        // print_r($this->session->get("people"));
         return $this->render('index', [
-            'subjects' => $subjects,
             'user' => $this->session->get("user"),
-            'userRole' =>$this->session->get("userRole"),
             'classPeople' =>$this->session->get("classPeople"),
             'parentsPeople' =>$this->session->get("parentsPeople"),
+            'people' =>$this->session->get("people"),
+            'peoples' =>$peoples,
+
+            'subjects' => $subjects,
+            'userRole' =>$this->session->get("userRole"),
             'peopleAge' => $peopleAge["age"]." ".$this->num_word($peopleAge["age"] ,['года','года','лет']),
             'fioClRuk' => $fioClRuk["fio"],
             'avgGrade' => number_format($avgGrade['AVG(mark)'],1),

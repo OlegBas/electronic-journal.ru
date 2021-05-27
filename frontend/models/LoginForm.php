@@ -66,8 +66,9 @@ class LoginForm extends Model
             
             if($userRole == "pupil") {
                 $userInfo = Peoples::find()->where(['idusers' => $user->id])->one();
-                $classPeople = Classes::find()->select(['title'])->where(['id' => $userInfo->idClass])->one();
+                $classPeople = Classes::find()->where(['id' => $userInfo->idClass])->one();
                 $session->set("classPeople",$classPeople);
+                $session->set("people",$userInfo);
     
                 $idsPeopleparents = Peopleparents::find()->select(['id'])->where(['idPeople' => $user->id])->asArray()->all();
                 $ids = [];
