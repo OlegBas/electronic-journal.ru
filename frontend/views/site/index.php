@@ -10,9 +10,9 @@
    <div class="row">
       <div class="col-md-12">
          <ul class="nav nav-tabs">
-            <?php for ($i=0; $i < count($actions); $i++) { ?>
-                  <li  ><a  data-toggle="tab" href="#<?=$actions[$i]["href"]?>" ><?=$actions[$i]["title"]?></a></li>
-            <?php }?>
+         <?php for ($i=0; $i < count($actions); $i++) { ?>
+            <li  ><a  data-toggle="tab" href="#<?=$actions[$i]["href"]?>" ><?=$actions[$i]["title"]?></a></li>
+         <?php }?>
          </ul>
          <div class="tab-content">
             <div class = "tab-pane active" id="lkInfo">

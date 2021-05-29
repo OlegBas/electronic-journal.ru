@@ -40,8 +40,8 @@ class cardPeople extends Model
     {
         return [
             // username and password are both required
-            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneMother', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
-            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneMother', 'family', 'activity', 'characteric'], 'safe'],
+            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
+            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'safe'],
 
         ];
     }
@@ -49,9 +49,20 @@ class cardPeople extends Model
     public  function attributeLabels()
     {
         return [
-            'username' => 'Имя пользователя',
-            'password' => 'Пароль',
-            'rememberMe' => 'Запомнить меня?',
+            'fio' => 'ФИО',
+            'dateOfBirth' => 'Дата рождения',
+            'address' => 'Место жительства',
+            'fioMother' => 'ФИО матери',
+            'fioFather' => 'ФИО отца',
+            'placeWorkMother' => 'место работы матери',
+            'placeWorkFather' => 'место работы отца',
+            'addressMother' => 'адрес матери',
+            'addressFather' => 'адрес отца',
+            'phoneMother' => 'телефон матери',
+            'phoneFather' => 'телефон отца',
+            'family' => 'Состав семьи',
+            'activity' => 'Социальная активность, увлечения, интересы',
+            'characteric' => 'Характеристика студента',
         ];
     }
     

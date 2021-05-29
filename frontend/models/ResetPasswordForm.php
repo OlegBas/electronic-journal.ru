@@ -44,10 +44,21 @@ class ResetPasswordForm extends Model
     public function rules()
     {
         return [
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password', 'required','message' => 'Заполните поле "{attribute}"! '],
+            ['password', 'string', 'min' => 6,'message' => 'Поле "{attribute} должно содержать минимум 6 символов!'],
         ];
     }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Пароль',
+        ];
+    }
+
+
+    
 
     /**
      * Resets password.
