@@ -6,6 +6,9 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use frontend\models\Peoples;
+use frontend\models\Classes;
+use frontend\models\Grade;
 
 /**
  * User model
@@ -28,6 +31,29 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $people;
+    public $classes;
+    public $age;
+    public $avgGrade;
+
+    private function  num_word($value, $words, $show = true) 
+    {
+        $num = $value % 100;
+        if ($num > 19) { 
+            $num = $num % 10; 
+        }
+        
+        $out = ($show) ?  $value . ' ' : '';
+        switch ($num) {
+            case 1:  $out .= $words[0]; break;
+            case 2: 
+            case 3: 
+            case 4:  $out .= $words[1]; break;
+            default: $out .= $words[2]; break;
+        }
+        
+        return $out;
+    }
 
     /**
      * {@inheritdoc}
@@ -37,15 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
         return '{{%user}}';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+   
 
     /**
      * {@inheritdoc}
@@ -80,9 +98,9 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username,$password)
+    public static function findByUsernameAndPassword($username,$password)
     {
-        return static::findOne(['username' => $username, 'password' => md5($password)]);
+        return static::findOne(['username' => $username,'password' => md5($password)]);
     }
 
     /**
@@ -208,5 +226,15 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function afterFind(){
+        $age = Yii::$app->db->createCommand("SELECT dateOfBirth,((YEAR(CURRENT_DATE) - YEAR(dateOfBirth)) - /* step 1 */ (DATE_FORMAT(CURRENT_DATE, '%m%d') < DATE_FORMAT(dateOfBirth, '%m%d')) /* step 2 */) AS age FROM user WHERE `id` = ".$this->id)->queryOne();
+        $avgGrade = Grade::find()->select(["AVG(mark)"])->where(['idPeople' => $this->id])->asArray()->one();
+        $this->avgGrade  = $avgGrade['AVG(mark)'];
+        $this->age = $this->num_word( $age["age"],['года','года','лет']);
+        if($this->role == "pupil") 
+            $this->people =  Peoples::find()->where(['idusers' => $this->id])->one();
+        elseif($this->role == "teacher")  $this->classes = Classes::find()->where(['idClRuk' => $this->id])->one();
     }
 }

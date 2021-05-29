@@ -1,0 +1,1 @@
+<p><?=$user->classes->prop9?></p>

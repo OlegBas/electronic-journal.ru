@@ -30,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => "Электронный журнал",
+        'brandLabel' => "Электронный журнал",   
         'options' => [
             'class' => 'navbar-inverse ',
         ],
@@ -38,13 +38,15 @@ AppAsset::register($this);
 
     $session = Yii::$app->session;
     // print_r($session->get('user'));
-    if (!$session->has('user')) {
+    if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
+
+        
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Выход (' . $session->get('user')->username . ')',
+                'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

@@ -1,7 +1,7 @@
 <?php
 
 namespace frontend\models;
-
+use common\models\User;
 use Yii;
 
 /**
@@ -13,23 +13,23 @@ use Yii;
  */
 class Peoples extends \yii\db\ActiveRecord
 {
+
+
+    public $classes;
+    public $parents;
+    public $user;
+
     /**
      * {@inheritdoc}
      */
+
+    
+
     public static function tableName()
     {
         return 'peoples';
     }
 
-
-    public function getUser()
-    {
-        return $this->hasOne(User::class, ['id' => 'idusers']);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -51,6 +51,10 @@ class Peoples extends \yii\db\ActiveRecord
     }
 
     public function afterFind(){
+        $this->classes = Classes::find()->where(['id' => $this->idClass])->one();
+        $this->parents = Parents::find()->where(['idPeople' => $this->id])->all();
+        $this->user = Yii::$app->db->createCommand("SELECT * FROM user WHERE `id` = ".$this->idusers)->queryOne();
+
         if($this->prop1 == 1) $this->prop1 = "+";
         else $this->prop1 = "-";
         if($this->prop2 == 1) $this->prop2 = "+";
@@ -63,5 +67,7 @@ class Peoples extends \yii\db\ActiveRecord
         else $this->prop5 = "-";
         if($this->prop6 == 1) $this->prop6 = "+";
         else $this->prop6 = "-";
+        if($this->prop7 == 1) $this->prop7 = "+";
+        else $this->prop7 = "-";
     }
 }

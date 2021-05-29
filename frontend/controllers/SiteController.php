@@ -2,17 +2,17 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use frontend\models\LoginForm;
-use frontend\models\User;
+use common\models\LoginForm;
+use common\models\User;
 use frontend\models\Subject;
 use frontend\models\Grade;
 use yii\data\Pagination;
-use yii\helpers\Url;
 use frontend\models\Peoples;
 use frontend\models\Classes;
 use frontend\models\Teachers;
@@ -20,6 +20,10 @@ use frontend\models\Peopleparents;
 use frontend\models\Parents;
 use frontend\models\Plans;
 use frontend\models\UserForm;
+use frontend\models\cardPeople;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResendVerificationEmailForm;
+use frontend\models\ResetPasswordForm;
 
 
 /**
@@ -30,18 +34,28 @@ class SiteController extends Controller
     
 // TODO SiteController
 public $session;
+public $app;
+public $req;
+public $res;
+public $authUser;
+public $actions;
 
 
 public function beforeAction($action)
 {
-    // echo $action->id;
-    $this->session = Yii::$app->session;
-    if($action->id != "login" && !$this->session->has('user'))
-        return $this->redirect(Url::to(['site/login']));
-    elseif($action->id == "login" && $this->session->has('user'))
-        return $this->goHome();
-     return parent::beforeAction($action);
-    // return false;
+    
+    $this->app  = Yii::$app;
+    $this->req  = Yii::$app->request;
+    $this->res  = Yii::$app->response;
+    $this->authUser  = Yii::$app->user->identity;
+    $publicActions = ['login','request-password-reset'];
+    if(!in_array($action->id,$publicActions)){
+        if (Yii::$app->user->isGuest) 
+            return $this->redirect(['site/login']);
+    }
+    
+    return parent::beforeAction($action);
+     
 }
 
     
@@ -62,81 +76,151 @@ public function beforeAction($action)
         ];
     }
 
+     private function editLDataPeople(){
+        $user =  User::findOne(11);
+        if($model->fio) $user->fio = $model->fio;
+        if($model->dateOfBirth) $user->dateOfBirth = $model->dateOfBirth;
+        if($model->email) $user->email = $model->email;
+        if($model->phone) $user->phone = $model->phone;
+        if($model->password) $user->password = md5($model->password);
+        return $user->save();
+     }
 
-    private function  num_word($value, $words, $show = true) 
-    {
-        $num = $value % 100;
-        if ($num > 19) { 
-            $num = $num % 10; 
-        }
-        
-        $out = ($show) ?  $value . ' ' : '';
-        switch ($num) {
-            case 1:  $out .= $words[0]; break;
-            case 2: 
-            case 3: 
-            case 4:  $out .= $words[1]; break;
-            default: $out .= $words[2]; break;
-        }
-        
-        return $out;
+     private function listActions(){
+         $listActions = $this->app->params['actions'];
+         $role = $this->authUser->role;
+         if($role == 'pupil')
+            return  [
+                $listActions['lkInfo'],
+                $listActions['grades'],
+                $listActions['timetable'],
+                $listActions['plans'],
+            ];
+         else if($role == 'teacher')
+                return  [ 
+                    $listActions['lkInfo'],
+                    $listActions['grades'],
+                    $listActions['timetable'],
+                    $listActions['plans'],
+                    $listActions['aboutGroup'],
+                    $listActions['socialMapGroup'],
+                    $listActions['busyGroup'],
+                    $listActions['diary'],
+                    $listActions['peoples'],
+            ];
+     }
+
+     
+    private function getNameTemplateLkInfoOnRole(){
+        $fileName = "lkInfo.php";
+        if($this->authUser->role == "pupil") return "peopleAccount/".$fileName;
+        return "teacherAccount/".$fileName;
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
     public function actionIndex()
     {
-
-        // print_r($this->session->get("user"));
-        $user = $this->session->get("user");
-        $userInfo =  $this->session->get("userInfo");
-        // print_r($this->session->get("userRole"));
-        // print_r($this->session->get("classPeople"));
-        // print_r($this->session->get("parentsPeople"));
-
-        $peoples = Peoples::find()
-            ->leftJoin('user','`peoples`.`idusers` = `user`.`id`')
-            ->with('user')
-            ->all();
-        // print_r($peoples);
+        $people = Peoples::find()->where(['id' => 1])->one();
+        // print_r($people->user['fio']);
+        $actions = $this->listActions();
         $model  = new UserForm();
         if ($model->load(Yii::$app->request->post())){
-            $user =  User::findOne($user->id);
-            if($model->fio) $user->fio = $model->fio;
-            if($model->dateOfBirth) $user->dateOfBirth = $model->dateOfBirth;
-            if($model->email) $user->email = $model->email;
-            if($model->phone) $user->phone = $model->phone;
-            if($model->password) $user->password = md5($model->password);
-            $user->save();
+            $this->editLDataPeople();
         }
-        
-        if($user) {
-            $peopleAge = Yii::$app->db->createCommand("SELECT dateOfBirth,((YEAR(CURRENT_DATE) - YEAR(dateOfBirth)) - /* step 1 */ (DATE_FORMAT(CURRENT_DATE, '%m%d') < DATE_FORMAT(dateOfBirth, '%m%d')) /* step 2 */) AS age FROM user WHERE `id` = ".$user->id)->queryOne();
-            $fioClRuk = User::find()->select(["fio"])->where(['id' => $userInfo->idClRuk])->asArray()->one();
-            $avgGrade = Grade::find()->select(["AVG(mark)"])->where(['idPeople' => $user->id])->asArray()->one();
-        }
-         // echo $age;
-        
-        $subjects = Subject::find()->all();
-        // print_r($this->session->get("people"));
         return $this->render('index', [
-            'user' => $this->session->get("user"),
-            'classPeople' =>$this->session->get("classPeople"),
-            'parentsPeople' =>$this->session->get("parentsPeople"),
-            'people' =>$this->session->get("people"),
-            'peoples' =>$peoples,
-
-            'subjects' => $subjects,
-            'userRole' =>$this->session->get("userRole"),
-            'peopleAge' => $peopleAge["age"]." ".$this->num_word($peopleAge["age"] ,['года','года','лет']),
-            'fioClRuk' => $fioClRuk["fio"],
-            'avgGrade' => number_format($avgGrade['AVG(mark)'],1),
+            'user' => $this->authUser,
+            'nameTemplateLkInfoOnRole' => $this->getNameTemplateLkInfoOnRole(),
+            'actions' => $actions,
+            'peoples' => Peoples::find()->all(),
             'model' => $model,
         ]); 
     }
+
+    public function actionAboutpeople($id){
+        return $this->render('teacherAccount/infoAboutPupil', [
+            'selectPeople' =>  '---------------'
+        ]);
+    }
+
+    public function actionPeople($id)
+    {
+        return $this->render('teacherAccount/infoAboutPupil', [
+        'people' => Peoples::find()->where(['id' => $id])->one(),
+        ]);
+    }
+
+    private function loadDataInModelcardPeople($id){
+        $model = new cardPeople();
+        $people = Peoples::find()->where(['id' => $id])->one();
+        $model->fio = $people->user['fio'];
+        $model->dateOfBirth = $people->user['dateOfBirth'];
+        $model->address = $people->user['address'];
+        $model->fioMother = $people->parents[0]['fio'];
+        $model->fioFather = $people->parents[1]['fio'];
+        $model->placeWorkMother = $people->parents[1]['placeWork'];
+        $model->placeWorkFather = $people->parents[1]['placeWork'];
+        $model->addressMother = $people->parents[0]['address'];
+        $model->addressFather = $people->parents[1]['address'];
+        $model->phoneMother = $people->parents[0]['phone'];
+        $model->phoneFather = $people->parents[1]['phone'];
+        $model->family =  $people->prop8;
+        $model->activity = $people->prop9;
+        $model->characteric = $people->prop10;
+        $model->idPeople = $people->id;
+        return $model;
+    }
+
+    private function saveCardPeople($model){
+        $idPeople = $model->idPeople;
+        $people = Peoples::find()->where(['id' => $idPeople])->one();
+        $idUser = $people->user['id'];
+        $user = User::find()->where(['id' => $idUser])->one();
+        $idParentMale = $people->parents[0]['id'];
+        $idParentFemale = $people->parents[1]['id'];
+        $parentMale = Parents::find()->where(['id' => $idParentMale])->one();
+        $parentFemale = Parents::find()->where(['id' => $idParentFemale])->one();
+
+        $user->fio = $model->fio;
+        $user->dateOfBirth = $model->dateOfBirth;
+        $user->address = $model->address;
+        $user->save();
+
+        $parentMale->fio = $model->fioFather;
+        $parentMale->placeWork = $model->placeWorkFather;
+        $parentMale->address =  $model->addressFather;
+        $parentMale->phone = $model->phoneFather;
+        $parentMale->save();
+
+        $parentFemale->fio = $model->fioMother;
+        $parentFemale->placeWork = $model->placeWorkMother;
+        $parentFemale->address =  $model->addressMother;
+        $parentFemale->phone = $model->phoneMother;
+        $parentFemale->save();
+
+        $people->prop8 = $model->family;
+        $people->prop9 = $model->activity;
+        $people->prop10 = $model->characteric;
+        $people->save();
+    }
+
+
+
+    public function actionEdit($id)
+    {
+
+        $model = $this->loadDataInModelcardPeople($id);
+        if ($model->load(Yii::$app->request->post())) {
+            $this->saveCardPeople($model);
+        }
+        return $this->render('teacherAccount/editFormPupil', [
+        'people' => Peoples::find()->where(['id' => $id])->one(),
+        'model' => $model,
+        ]);
+    }
+
+
+
+
+    
 
     public function actionLogin()
     {
@@ -146,8 +230,8 @@ public function beforeAction($action)
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) 
-            && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
             return $this->goBack();
         }
         return $this->render('login', [
@@ -156,25 +240,7 @@ public function beforeAction($action)
     }
     
 
-    public function actionSubject(){
-        $user = Yii::$app->session->get('user');
-        $idSelectSubject = Yii::$app->request->get("id");
-        $grades = Grade::find()->where(['idSubject' => $idSelectSubject,'idUser' => $user->id])->all();
-        $subject = Subject::find()->where(['id' => $idSelectSubject ])->one();
-        $gradesArr = [];
-        foreach($grades as $grade){
-            $gradesArr[] = $grade->grade;
-        }
-        
-        
-
-        return $this->render('subject',[
-            'user' =>$user,
-            'subject' => $subject,
-            'gradesArr' => $gradesArr,
-
-        ]);
-    }
+    
 
     /**
      * Logs out the current user.
@@ -183,8 +249,8 @@ public function beforeAction($action)
      */
     public function actionLogout()
     {
-        $this->session->remove('user');
-        return $this->goHome();
+        Yii::$app->user->logout();
+        return $this->redirect(['site/login']);
     }
 
      /**
@@ -194,6 +260,7 @@ public function beforeAction($action)
      */
     public function actionRequestPasswordReset()
     {
+        // echo 30;
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {

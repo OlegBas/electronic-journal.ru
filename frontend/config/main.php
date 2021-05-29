@@ -20,7 +20,7 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             //TODO Обязательно отключить, иначе будет требоваться ключ auth_key в таблице user
-            'enableSession' => false,
+            'enableSession' => true,
             // 'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [

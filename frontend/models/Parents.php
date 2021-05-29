@@ -28,8 +28,8 @@ class Parents extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fio', 'phone', 'role'], 'required'],
-            [['fio', 'phone', 'role'], 'string', 'max' => 255],
+            // [['fio', 'phone', 'role'], 'required'],
+            // [['fio', 'phone', 'role'], 'string', 'max' => 255],
         ];
     }
 
