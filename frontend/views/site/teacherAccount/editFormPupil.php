@@ -48,23 +48,23 @@ use yii\widgets\ActiveForm;
                   <tbody>
                      <tr>
                         <td>ФИО</td>
-                        <td><?= $form->field($model, 'fioMother')->textInput(['value' => $model->fioMother])->label('')?></td>
                         <td><?= $form->field($model, 'fioFather')->textInput(['value' => $model->fioFather])->label('')?></td>
+                        <td><?= $form->field($model, 'fioMother')->textInput(['value' => $model->fioMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>место работы</td>
-                        <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => $model->placeWorkMother])->label('')?></td>
                         <td><?= $form->field($model, 'placeWorkFather')->textInput(['value' => $model->placeWorkFather])->label('')?></td>
+                        <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => $model->placeWorkMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>адрес</td>
-                        <td><?= $form->field($model, 'addressMother')->textInput(['value' => $model->addressMother])->label('')?></td>
                         <td><?= $form->field($model, 'addressFather')->textInput(['value' => $model->addressFather])->label('')?></td>
+                        <td><?= $form->field($model, 'addressMother')->textInput(['value' => $model->addressMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>телефон</td>
-                        <td><?= $form->field($model, 'phoneMother')->textInput(['value' => $model->phoneMother])->label('')?></td>
                         <td><?= $form->field($model, 'phoneFather')->textInput(['value' => $model->phoneFather])->label('')?></td>
+                        <td><?= $form->field($model, 'phoneMother')->textInput(['value' => $model->phoneMother])->label('')?></td>
                      </tr>
                   </tbody>
                </table>

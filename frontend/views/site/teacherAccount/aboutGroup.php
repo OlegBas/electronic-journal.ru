@@ -1,3 +1,9 @@
+
+<?php
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
 <table class="table table-hover table-bordered">
               <thead>
                 <tr>
@@ -69,3 +75,4 @@
                 </tr>
               </tbody>
           </table>
+          <a href="<?=Url::to(['site/editaboutgroup','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>

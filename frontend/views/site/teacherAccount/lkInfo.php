@@ -49,11 +49,13 @@ use yii\widgets\ActiveForm;
                           <?php $form = ActiveForm::begin([
                             'id' => 'lkdata-form',
                           ]) ?>
-                            <?= $form->field($model, 'fio')->textInput(['placeholder' => 'Введите ФИО'])?>
-                            <?= $form->field($model, 'dateOfBirth')->input('date') ?>
-                            <?= $form->field($model, 'email')->input('email') ?>
-                            <?= $form->field($model, 'phone')->input('tel') ?>
+                            <?= $form->field($model, 'fio')->textInput(['placeholder' => 'Введите ФИО','value' => $user->fio])?>
+                            <?= $form->field($model, 'dateOfBirth')->textInput(['type' => 'date','value' => $user->dateOfBirth]) ?>
+                            <?= $form->field($model, 'email')->textInput(['type' => 'email','value' => $user->email]) ?>
+                            <?= $form->field($model, 'address')->textInput(['type' => 'text','value' => $user->address]) ?>
+                            <?= $form->field($model, 'phone')->textInput(['type' => 'tel','value' => $user->phone]) ?>
                             <?= $form->field($model, 'password')->input('password') ?>
+                            <?= $form->field($model, 'id')->textInput(['type' => 'hidden','value' => $user->id])->label('') ?>
                             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
                           <?php ActiveForm::end() ?>
                         </div>

@@ -11,6 +11,7 @@ use yii\base\Model;
  */
 class UserForm extends Model
 {
+    public $id;
     public $fio;
     public $dateOfBirth;
     public $username;
@@ -24,8 +25,8 @@ class UserForm extends Model
     public function rules()
     {
         return [
-           [ ['username','email','password','role','fio','phone','dateOfBirth','address','photo'], 'safe'],
-           [ ['fio'],'required', 'message' => 'Заполните поле "{attribute}"! '],
+           [ ['id','username','email','password','role','fio','phone','dateOfBirth','address','photo'], 'safe'],
+           [ ['fio','email'],'required', 'message' => 'Заполните поле "{attribute}"! '],
         ];
     }
 
@@ -35,6 +36,7 @@ class UserForm extends Model
             'dateOfBirth' => 'Дата рождения',
             'email' => 'E-mail',
             'password' => 'Пароль',
+            'address' => 'Адрес',
             'phone' => 'Телефон',
         ];
     }

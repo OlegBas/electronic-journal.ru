@@ -29,3 +29,21 @@
   border: 1px solid #000;
   border-radius: 5px;
 }
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .btn-link {
+  color: #ffffff;
+}
+
+.navbar-inverse {
+  background-color: #72abe6;
+  border: none;
+}
+
+body {
+  background-color: #fff;
+}
+
+a {
+  color: rgb(20, 68, 200);
+}

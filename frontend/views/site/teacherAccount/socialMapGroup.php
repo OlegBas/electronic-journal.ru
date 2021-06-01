@@ -1,3 +1,9 @@
+
+<?php
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
 <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -10,6 +16,7 @@
                   <th>Родители инвалиды</th>
                   <th>Дети инвалиды</th>
                   <th>Опекаемые</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -24,6 +31,9 @@
                   <td><?=$onePeople->prop5?></td>
                   <td><?=$onePeople->prop6?></td>
                   <td><?=$onePeople->prop7?></td>
+                  <td>
+                    <a href="<?=Url::to(['site/editsocialmap','id' => $onePeople->id])?>" class="btn btn-primary " role="button" >Изменить</a>
+                  </td>
                 </tr>
                 <?php }?>
               </tbody>

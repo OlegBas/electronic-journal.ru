@@ -78,6 +78,7 @@ use yii\widgets\ActiveForm;
                             <?= $form->field($model, 'fio')->textInput(['placeholder' => 'Введите ФИО'])?>
                             <?= $form->field($model, 'dateOfBirth')->input('date') ?>
                             <?= $form->field($model, 'email')->input('email') ?>
+                            <?= $form->field($model, 'address')->input('text') ?>
                             <?= $form->field($model, 'phone')->input('tel') ?>
                             <?= $form->field($model, 'password')->input('password') ?>
                             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>

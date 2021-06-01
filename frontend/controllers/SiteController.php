@@ -76,11 +76,13 @@ public function beforeAction($action)
         ];
     }
 
-     private function editLDataPeople(){
-        $user =  User::findOne(11);
+     private function editLDataPeople($model){
+        $user =  User::findOne($model->id);
+        // print_r($model);
         if($model->fio) $user->fio = $model->fio;
         if($model->dateOfBirth) $user->dateOfBirth = $model->dateOfBirth;
         if($model->email) $user->email = $model->email;
+        if($model->address) $user->address = $model->address;
         if($model->phone) $user->phone = $model->phone;
         if($model->password) $user->password = md5($model->password);
         return $user->save();
@@ -92,16 +94,16 @@ public function beforeAction($action)
          if($role == 'pupil')
             return  [
                 $listActions['lkInfo'],
-                $listActions['grades'],
-                $listActions['timetable'],
-                $listActions['plans'],
+                // $listActions['grades'],
+                // $listActions['timetable'],
+                // $listActions['plans'],
             ];
          else if($role == 'teacher')
                 return  [ 
                     $listActions['lkInfo'],
-                    $listActions['grades'],
-                    $listActions['timetable'],
-                    $listActions['plans'],
+                    // $listActions['grades'],
+                    // $listActions['timetable'],
+                    // $listActions['plans'],
                     $listActions['aboutGroup'],
                     $listActions['socialMapGroup'],
                     $listActions['busyGroup'],
@@ -124,7 +126,8 @@ public function beforeAction($action)
         $actions = $this->listActions();
         $model  = new UserForm();
         if ($model->load(Yii::$app->request->post())){
-            $this->editLDataPeople();
+            if($this->editLDataPeople($model)) return $this->goHome();
+
         }
         return $this->render('index', [
             'user' => $this->authUser,
@@ -154,14 +157,14 @@ public function beforeAction($action)
         $model->fio = $people->user['fio'];
         $model->dateOfBirth = $people->user['dateOfBirth'];
         $model->address = $people->user['address'];
-        $model->fioMother = $people->parents[0]['fio'];
-        $model->fioFather = $people->parents[1]['fio'];
+        $model->fioMother = $people->parents[1]['fio'];
+        $model->fioFather = $people->parents[0]['fio'];
         $model->placeWorkMother = $people->parents[1]['placeWork'];
-        $model->placeWorkFather = $people->parents[1]['placeWork'];
-        $model->addressMother = $people->parents[0]['address'];
-        $model->addressFather = $people->parents[1]['address'];
-        $model->phoneMother = $people->parents[0]['phone'];
-        $model->phoneFather = $people->parents[1]['phone'];
+        $model->placeWorkFather = $people->parents[0]['placeWork'];
+        $model->addressMother = $people->parents[1]['address'];
+        $model->addressFather = $people->parents[0]['address'];
+        $model->phoneMother = $people->parents[1]['phone'];
+        $model->phoneFather = $people->parents[0]['phone'];
         $model->family =  $people->prop8;
         $model->activity = $people->prop9;
         $model->characteric = $people->prop10;
@@ -214,6 +217,31 @@ public function beforeAction($action)
         return $this->render('teacherAccount/editFormPupil', [
         'people' => Peoples::find()->where(['id' => $id])->one(),
         'model' => $model,
+        ]);
+    }
+
+    public function actionEditaboutgroup(){
+        return $this->render('teacherAccount/editaboutgroup', [
+            'model' => $model,
+         ]);
+    }
+
+
+    public function actionEditsocialmap(){
+        return $this->render('teacherAccount/editsocialmap', [
+            'model' => $model,
+         ]);
+    }
+    
+    public function actionEditbusypeople(){
+        return $this->render('teacherAccount/editbusypeople', [
+            'model' => $model,
+         ]);
+    }
+
+    public function actionEditdiary(){
+        return $this->render('teacherAccount/editdiary', [
+            'model' => $model,
         ]);
     }
 

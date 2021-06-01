@@ -36,23 +36,23 @@
                   <tbody>
                      <tr>
                         <td>ФИО</td>
-                        <td><?=$people->parents[0]["fio"]?></td>
                         <td><?=$people->parents[1]["fio"]?></td>
+                        <td><?=$people->parents[0]["fio"]?></td>
                      </tr>
                      <tr>
                         <td>место работы</td>
-                        <td><?=$people->parents[0]["placeWork"]?></td>
                         <td><?=$people->parents[1]["placeWork"]?></td>
+                        <td><?=$people->parents[0]["placeWork"]?></td>
                      </tr>
                      <tr>
                         <td>адрес</td>
-                        <td><?=$people->parents[0]["address"]?></td>
                         <td><?=$people->parents[1]["address"]?></td>
+                        <td><?=$people->parents[0]["address"]?></td>
                      </tr>
                      <tr>
                         <td>телефон</td>
-                        <td><?=$people->parents[0]["phone"]?></td>
                         <td><?=$people->parents[1]["phone"]?></td>
+                        <td><?=$people->parents[0]["phone"]?></td>
                      </tr>
                   </tbody>
                </table>

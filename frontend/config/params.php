@@ -24,12 +24,12 @@ return [
         ],
         'aboutGroup' =>
         [
-            'title' => 'Общие сведения о группе',
+            'title' => 'Общие сведения о классе',
             'href' => 'aboutGroup'
         ],
         'socialMapGroup' =>
         [
-            'title' => 'Социальная карта группы',
+            'title' => 'Социальная карта класса',
             'href' => 'socialMapGroup'
         ],
         'busyGroup' =>

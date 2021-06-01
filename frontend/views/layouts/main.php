@@ -35,12 +35,11 @@ AppAsset::register($this);
             'class' => 'navbar-inverse ',
         ],
     ]);
-
-    $session = Yii::$app->session;
-    // print_r($session->get('user'));
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
+        
     } else {
+
         $menuItems[] = '<li>'
 
         
