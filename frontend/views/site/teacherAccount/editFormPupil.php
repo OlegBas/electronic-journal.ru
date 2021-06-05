@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<?php $form = ActiveForm::begin() ;
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
 ?>
 <?php if(isset($addPeople)) {?>
 <h3>Создание карточки ученика</h3>
@@ -38,6 +38,12 @@ use yii\widgets\ActiveForm;
                         </td>
                      </tr>
                      <?php }?>
+                     <tr>
+                        <td>Фото</td>
+                        <td>
+                           <?=$form->field($model, 'photo')->fileInput()->label('');?>
+                        </td>
+                     </tr>
 
                      <tr>
                         <td>Дата рождения</td>
@@ -117,28 +123,42 @@ use yii\widgets\ActiveForm;
                      </tr>
                         <tr>
                            <th>Предметы</th>
-                           <th>1 сем.</th>
-                           <th>2 сем.</th>
-                           <th>3 сем.</th>
-                           <th>4 сем.</th>
+                           <th>1 четв.</th>
+                           <th>2 четв.</th>
+                           <th>3 четв.</th>
+                           <th>4 четв.</th>
                         </tr>
                      </thead>
                      <tbody>
+                     <?php 
+                     // print_r($subjects);
+                     if(!$addPeople) {
+                     foreach($subjects as $subject) {?>
                         <tr>
-                           <td>Математика</td>
-                           <td>
-                            <input type="number" name="mark1" id="inputmark1" class="form-control" value="3" >
-                           </td>
-                           <td>
-                           <input type="number" name="mark1" id="inputmark1" class="form-control" value="4" >
-                           </td>
-                           <td>
-                           <input type="number" name="mark1" id="inputmark1" class="form-control" value="5" >
-                           </td>
-                           <td>
-                           <input type="number" name="mark1" id="inputmark1" class="form-control" value="2" >
-                           </td>
+
+                           <td><?=$subject->title?></td>
+                           <?php for($i = 1;$i <= count($subject->grades);$i++) {?>
+                              <td>
+                              <input type="number" name="Grades[<?=$subject->id?>_<?=$i?>_<?=$_GET['id']?>]" id="inputmark1" class="form-control" value="<?=$subject->grades[$i]?>" >
+                              </td>
+                           <?php }?>
                         </tr>
+                        <?php }?>
+                        <?php } else {?>
+                          <?php foreach($subjects as $subject) { ?>
+                           <tr> 
+                           <td><?=$subject->title?></td>
+                           <?php for($i = 1;$i <= 4;$i++) {?>
+                           
+                              <td>
+                                 <input type="number" name="Grades[<?=$subject->id?>_<?=$i?>]" id="inputmark1" class="form-control" value="0" >
+                              </td>
+                           <?php }?>
+                           
+                        </tr>
+
+
+                        <?php }}?>
                      </tbody>
                   </table>
                </div>

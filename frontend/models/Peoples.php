@@ -54,7 +54,6 @@ class Peoples extends \yii\db\ActiveRecord
         $this->classes = Classes::find()->where(['id' => $this->idClass])->one();
         $this->parents = Parents::find()->where(['idPeople' => $this->id])->all();
         $this->user = Yii::$app->db->createCommand("SELECT * FROM user WHERE `id` = ".$this->idusers)->queryOne();
-
         /*
         if($this->prop1 == 1) $this->prop1 = "+";
         else $this->prop1 = "-";

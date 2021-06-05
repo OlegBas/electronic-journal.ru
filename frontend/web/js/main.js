@@ -36,3 +36,22 @@
 //     e.preventDefault();
 //   });
 // });
+
+$(function () {
+  $("#version a").on("click", function () {
+    e.preventDefault();
+  });
+
+  $("#zoomIn").on("click", function () {
+    $("body").attr("style", "font-size:40px");
+  });
+  $("#zoomOut").on("click", function () {
+    $("body").attr("style", "font-size:14px");
+  });
+  $("#bgBlack").on("click", function () {
+    $("body").attr("style", "background-color:#000");
+  });
+  $("#bgWhite").on("click", function () {
+    $("body").attr("style", "background-color:#fff");
+  });
+});

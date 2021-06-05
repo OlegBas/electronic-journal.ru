@@ -29,6 +29,7 @@ use frontend\models\cardPeople;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
+use yii\web\UploadedFile;
 
 
 /**
@@ -48,6 +49,7 @@ public $actions;
 
 public function beforeAction($action)
 {
+    
     
     $this->app  = Yii::$app;
     $this->req  = Yii::$app->request;
@@ -127,20 +129,21 @@ public function beforeAction($action)
     public function actionIndex()
     {
         $people = Peoples::find()->where(['id' => 1])->one();
-        // print_r($people->user['fio']);
+        $subjects = Subject::find()->all();
         $actions = $this->listActions();
         $model  = new UserForm();
         if ($model->load(Yii::$app->request->post())){
             if($this->editLDataPeople($model)) return $this->goHome();
 
         }
-        
+
         return $this->render('index', [
             'user' => $this->authUser,
             'nameTemplateLkInfoOnRole' => $this->getNameTemplateLkInfoOnRole(),
             'actions' => $actions,
             'peoples' => Peoples::find()->all(),
             'model' => $model,
+            'subjects' => $subjects 
         ]); 
     }
 
@@ -152,8 +155,10 @@ public function beforeAction($action)
 
     public function actionPeople($id)
     {
+        $subjects = Subject::find()->all();
         return $this->render('teacherAccount/infoAboutPupil', [
         'people' => Peoples::find()->where(['id' => $id])->one(),
+        'subjects' => $subjects 
         ]);
     }
 
@@ -198,16 +203,20 @@ public function beforeAction($action)
         }
 
         $user->fio = $model->fio;
+        if($_FILES['cardPeople']['name']['photo']){
+            $user->photo = $model->photo;
+        }
         $user->dateOfBirth = $model->dateOfBirth;
         $user->address = $model->address;
         $user->save();
         $idUser= Yii::$app->db->getLastInsertID();
 
+
         if($isNew){
             $people->idusers = $idUser;
             $people->idClRuk = 18;
             $people->idClass = 1;
-            $people->gender = 0;
+            $people->gender = $model->gender;
         }
 
 
@@ -217,9 +226,7 @@ public function beforeAction($action)
         $people->save();
         $idPeople = Yii::$app->db->getLastInsertID();
 
-        if($isNew){
-            $idPeople = Yii::$app->db->getLastInsertID();
-        }
+        
 
         $parentMale->fio = $model->fioFather;
         $parentMale->placeWork = $model->placeWorkFather;
@@ -242,20 +249,46 @@ public function beforeAction($action)
         }
         $parentFemale->save();
 
+        if(!$isNew){
+            $grades =  $_POST["Grades"];
+                foreach ($grades as $key => $value) {
+                    $infoAboutGrade =  explode("_",$key);
+                    $grade = Grade::find()->where(['idSubject' => $infoAboutGrade[0],'sem' =>$infoAboutGrade[1],'idPeople' =>$infoAboutGrade[2]])->one();
+
+                    $grade->mark = $value;
+                    $grade->save();
+                }
+        } else{
+            $grades =  $_POST["Grades"];
+                foreach ($grades as $key => $value) {
+                    $infoAboutGrade =  explode("_",$key);
+                    $grade = new Grade();
+                    $grade->idSubject = $infoAboutGrade[0];
+                    $grade->idPeople = $idPeople;
+                    $grade->sem = $infoAboutGrade[1];
+                    $grade->mark = $value;
+                    $grade->save();
+                }
+
+            }
+
     }
 
     public function actionAddpeople()
     {
 
         $model = new cardPeople();
+        $subjects = Subject::find()->all();
         if ($model->load(Yii::$app->request->post())) {
-            print_r($_POST);
-            // $this->saveCardPeople($model,$isNew = true);
+            $model->photo = UploadedFile::getInstance($model, 'photo');
+            $model->upload();
+            $this->saveCardPeople($model,$isNew = true);
             return $this->redirect(['index', 'id' => 1]);
         }
         return $this->render('teacherAccount/editFormPupil', [
             'model' => $model,
-            'addPeople' => true
+            'addPeople' => true,
+            'subjects' => $subjects
         ]);
     }
 
@@ -264,14 +297,24 @@ public function beforeAction($action)
     public function actionEdit($id)
     {
 
+        $subjects = Subject::find()->all();
+   
         $model = $this->loadDataInModelcardPeople($id);
         if ($model->load(Yii::$app->request->post())) {
+            if($_FILES['cardPeople']['name']['photo']){
+                $model->photo = UploadedFile::getInstance($model, 'photo');
+                $model->upload();
+            }
+           
+            
             $this->saveCardPeople($model);
             return $this->redirect(['index', 'id' => 1]);
         }
+        // else print($model->errors);
         return $this->render('teacherAccount/editFormPupil', [
         'people' => Peoples::find()->where(['id' => $id])->one(),
         'model' => $model,
+        'subjects' => $subjects,
         ]);
     }
 

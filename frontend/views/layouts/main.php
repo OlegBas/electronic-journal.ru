@@ -26,8 +26,26 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
+<style>
+#version{
+    border:1px solid red;
+    width: 100%;
+    height: 50px;
+    top:0;
+    left:0;
+    background:red;
+}
+</style>
 <div class="wrap">
+<div id = "version">
+
+<button type="button" class="btn btn-primary" id = "zoomIn">Увеличить</button>
+<button type="button" class="btn btn-primary" id = "zoomOut">Уменьшить</button>
+<button type="button" class="btn btn-primary" id = "bgBlack">Темный фон</button>
+<button type="button" class="btn btn-primary" id = "bgWhite">Белый фон</button>
+
+
+</div>
     <?php
     NavBar::begin([
         'brandLabel' => "Электронный журнал",   

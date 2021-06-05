@@ -81,6 +81,7 @@
                </p>
                <h4>Ведомость</h4>
                <div class="table-responsive ">
+               <div class="table-responsive ">
                   <table class="table table-hover table-bordered">
                      <thead>
                      <tr>
@@ -89,36 +90,48 @@
                      </tr>
                         <tr>
                            <th>Предметы</th>
-                           <th>1 сем.</th>
-                           <th>2 сем.</th>
-                           <th>3 сем.</th>
-                           <th>4 сем.</th>
+                           <th>1 четв.</th>
+                           <th>2 четв.</th>
+                           <th>3 четв.</th>
+                           <th>4 четв.</th>
                         </tr>
                      </thead>
                      <tbody>
+                     <?php 
+                     // print_r($subjects);
+                     if(!$addPeople) {
+                     foreach($subjects as $subject) {?>
                         <tr>
-                           <td>Математика</td>
-                           <td>3</td>
-                           <td>4</td>
-                           <td>3</td>
-                           <td>5</td>
+
+                           <td><?=$subject->title?></td>
+                           <?php for($i = 1;$i <= count($subject->grades);$i++) {?>
+                              <td>
+                              <?=$subject->grades[$i]?>
+                              </td>
+                           <?php }?>
                         </tr>
+                        <?php }?>
+                        <?php } else {?>
+                          <?php foreach($subjects as $subject) {?>
+                           <tr> 
+                           
+                           <td><?=$subject->title?></td>
+                           
+                              <td>
+                                 <input type="number" name="mark1" id="inputmark1" class="form-control" value="0" >
+                              </td>
+                        </tr>
+
+
+                        <?php }}?>
                         <tr>
-                           <td>Русский</td>
-                           <td>5</td>
-                           <td>4</td>
-                           <td>5</td>
-                           <td>5</td>
+                           <td colspan = "5">Средний балл за год: <?=$subject->avg?></td>
                         </tr>
-                        <tr>
-                           <td>Англ.</td>
-                           <td>4</td>
-                           <td>4</td>
-                           <td>5</td>
-                           <td>4</td>
-                        </tr>
+
                      </tbody>
+
                   </table>
+               </div>
                </div>
                
                <a href="<?=Url::to(['site/edit','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>

@@ -12,6 +12,7 @@ class cardPeople extends Model
     public $fio;
     public $dateOfBirth;
     public $address;
+    public $photo;
     public $fioMother;
     public $gender;
     public $fioFather;
@@ -41,11 +42,13 @@ class cardPeople extends Model
     {
         return [
             // username and password are both required
-            [['fio', 'dateOfBirth','gender', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
-            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'safe'],
+            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
+            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric','gender','photo'], 'safe'],
 
         ];
     }
+
+
 
     public  function attributeLabels()
     {
@@ -53,6 +56,7 @@ class cardPeople extends Model
             'fio' => 'ФИО',
             'dateOfBirth' => 'Дата рождения',
             'address' => 'Место жительства',
+            'photo' => 'Фотография',
             'gender' => 'Пол',
             'fioMother' => 'ФИО матери',
             'fioFather' => 'ФИО отца',
@@ -66,6 +70,19 @@ class cardPeople extends Model
             'activity' => 'Социальная активность, увлечения, интересы',
             'characteric' => 'Характеристика студента',
         ];
+    }
+
+
+    public function upload()
+    {
+        // echo "upload";
+        if ($this->validate()) {
+            $this->photo->saveAs('web/images/' . $this->photo->baseName . '.' . $this->photo->extension);
+            return true;
+        } else {
+            // print_r($this->errors);
+            return false;
+        }
     }
     
 

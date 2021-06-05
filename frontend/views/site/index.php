@@ -63,7 +63,9 @@
             </div>
             <div class="tab-pane" id = "infoAboutPupil">
             <?=$this->render("teacherAccount/infoAboutPupil.php",[
-                  'people' => $people
+                  'people' => $people,
+                  'subjects' => $subjects 
+
               ])?>
             </div>
             <div class = "tab-pane" id="grades">
