@@ -38,8 +38,15 @@
 // });
 
 $(function () {
-  $("#version a").on("click", function () {
-    e.preventDefault();
+  let isVersionShow = false;
+  $("#toggleVersion").on("click", function () {
+    if (!isVersionShow) {
+      $("#version").show();
+      isVersionShow = true;
+    } else {
+      $("#version").hide();
+      isVersionShow = false;
+    }
   });
 
   $("#zoomIn").on("click", function () {
