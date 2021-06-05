@@ -6,4 +6,4 @@ use yii\widgets\ActiveForm;
 ?>
 <p><?=$user->classes->prop9?></p>
 
-<a href="<?=Url::to(['site/editdiary','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>
+<a href="<?=Url::to(['site/editdiary','id' => $user->classes->id])?>" class="btn btn-primary " role="button" >Изменить</a>

@@ -13,6 +13,7 @@ class cardPeople extends Model
     public $dateOfBirth;
     public $address;
     public $fioMother;
+    public $gender;
     public $fioFather;
     public $placeWorkMother;
     public $placeWorkFather;
@@ -40,7 +41,7 @@ class cardPeople extends Model
     {
         return [
             // username and password are both required
-            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
+            [['fio', 'dateOfBirth','gender', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
             [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'safe'],
 
         ];
@@ -52,6 +53,7 @@ class cardPeople extends Model
             'fio' => 'ФИО',
             'dateOfBirth' => 'Дата рождения',
             'address' => 'Место жительства',
+            'gender' => 'Пол',
             'fioMother' => 'ФИО матери',
             'fioFather' => 'ФИО отца',
             'placeWorkMother' => 'место работы матери',

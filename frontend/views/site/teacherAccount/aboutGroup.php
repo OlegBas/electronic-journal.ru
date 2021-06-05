@@ -75,4 +75,4 @@ use yii\widgets\ActiveForm;
                 </tr>
               </tbody>
           </table>
-          <a href="<?=Url::to(['site/editaboutgroup','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>
+          <a href="<?=Url::to(['site/editaboutgroup','id' => $user->classes->id,'idClRuk' => $user->id])?>" class="btn btn-primary " role="button" >Изменить</a>

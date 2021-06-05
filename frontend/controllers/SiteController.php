@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -20,6 +21,10 @@ use frontend\models\Peopleparents;
 use frontend\models\Parents;
 use frontend\models\Plans;
 use frontend\models\UserForm;
+use frontend\models\DiaryForm;
+use frontend\models\BusypeopleForm;
+use frontend\models\AboutgroupForm;
+use frontend\models\SocialmapForm;
 use frontend\models\cardPeople;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -129,6 +134,7 @@ public function beforeAction($action)
             if($this->editLDataPeople($model)) return $this->goHome();
 
         }
+        
         return $this->render('index', [
             'user' => $this->authUser,
             'nameTemplateLkInfoOnRole' => $this->getNameTemplateLkInfoOnRole(),
@@ -172,37 +178,85 @@ public function beforeAction($action)
         return $model;
     }
 
-    private function saveCardPeople($model){
-        $idPeople = $model->idPeople;
-        $people = Peoples::find()->where(['id' => $idPeople])->one();
-        $idUser = $people->user['id'];
-        $user = User::find()->where(['id' => $idUser])->one();
-        $idParentMale = $people->parents[0]['id'];
-        $idParentFemale = $people->parents[1]['id'];
-        $parentMale = Parents::find()->where(['id' => $idParentMale])->one();
-        $parentFemale = Parents::find()->where(['id' => $idParentFemale])->one();
+    private function saveCardPeople($model,$isNew = false){
+        
+        if(!$isNew){
+            $idPeople = $model->idPeople;
+            $people = Peoples::find()->where(['id' => $idPeople])->one();
+            $idUser = $people->user['id'];
+            $idParentMale = $people->parents[0]['id'];
+            $idParentFemale = $people->parents[1]['id'];
+            $user = User::find()->where(['id' => $idUser])->one();
+            $parentMale = Parents::find()->where(['id' => $idParentMale])->one();
+            $parentFemale = Parents::find()->where(['id' => $idParentFemale])->one();
+        }
+        else{
+            $people = new Peoples();
+            $user = new User();
+            $parentMale = new Parents();
+            $parentFemale = new Parents();
+        }
 
         $user->fio = $model->fio;
         $user->dateOfBirth = $model->dateOfBirth;
         $user->address = $model->address;
         $user->save();
+        $idUser= Yii::$app->db->getLastInsertID();
+
+        if($isNew){
+            $people->idusers = $idUser;
+            $people->idClRuk = 18;
+            $people->idClass = 1;
+            $people->gender = 0;
+        }
+
+
+        $people->prop8 = $model->family;
+        $people->prop9 = $model->activity;
+        $people->prop10 = $model->characteric;
+        $people->save();
+        $idPeople = Yii::$app->db->getLastInsertID();
+
+        if($isNew){
+            $idPeople = Yii::$app->db->getLastInsertID();
+        }
 
         $parentMale->fio = $model->fioFather;
         $parentMale->placeWork = $model->placeWorkFather;
         $parentMale->address =  $model->addressFather;
         $parentMale->phone = $model->phoneFather;
+        
+        if($isNew){
+            $parentMale->role = "отец";
+            $parentMale->idPeople = $idPeople;
+        }
         $parentMale->save();
 
         $parentFemale->fio = $model->fioMother;
         $parentFemale->placeWork = $model->placeWorkMother;
         $parentFemale->address =  $model->addressMother;
         $parentFemale->phone = $model->phoneMother;
+        if($isNew){
+            $parentFemale->role = "мать";
+            $parentFemale->idPeople = $idPeople;
+        }
         $parentFemale->save();
 
-        $people->prop8 = $model->family;
-        $people->prop9 = $model->activity;
-        $people->prop10 = $model->characteric;
-        $people->save();
+    }
+
+    public function actionAddpeople()
+    {
+
+        $model = new cardPeople();
+        if ($model->load(Yii::$app->request->post())) {
+            print_r($_POST);
+            // $this->saveCardPeople($model,$isNew = true);
+            return $this->redirect(['index', 'id' => 1]);
+        }
+        return $this->render('teacherAccount/editFormPupil', [
+            'model' => $model,
+            'addPeople' => true
+        ]);
     }
 
 
@@ -213,6 +267,7 @@ public function beforeAction($action)
         $model = $this->loadDataInModelcardPeople($id);
         if ($model->load(Yii::$app->request->post())) {
             $this->saveCardPeople($model);
+            return $this->redirect(['index', 'id' => 1]);
         }
         return $this->render('teacherAccount/editFormPupil', [
         'people' => Peoples::find()->where(['id' => $id])->one(),
@@ -220,28 +275,88 @@ public function beforeAction($action)
         ]);
     }
 
-    public function actionEditaboutgroup(){
+
+
+
+    public function actionEditaboutgroup($id){
+        $model  = new AboutgroupForm();
+        $allClRuks = User::find()->where(['role' => 'teacher'])->all();
+        $allClRuks = ArrayHelper::map($allClRuks,'id','fio');
+        $objClass = Classes::find()->where(['id' => $id])->one();
+        if ($model->load(Yii::$app->request->post())) {
+            $objClass->prop1 = $model->prop1;
+            $objClass->prop2 = $model->prop2;
+            $objClass->prop3 = $model->prop3;
+            $objClass->prop4 = $model->prop4;
+            $objClass->prop5 = $model->prop5;
+            $objClass->prop6 = $model->prop6;
+            $objClass->prop7 = $model->prop7;
+            $objClass->prop8 = $model->prop8;
+            $objClass->save();
+            return $this->redirect(['index', 'id' => 1]);
+        }
         return $this->render('teacherAccount/editaboutgroup', [
             'model' => $model,
+            'objClass' => $objClass,
+            'allClRuks' => $allClRuks,
+
          ]);
     }
 
 
-    public function actionEditsocialmap(){
+    public function actionEditsocialmap($id){
+        $model  = new SocialmapForm();
+        $objPeople = Peoples::find()->where(['id' => $id])->one();
+        $model->load($objClass);
+        if ($model->load(Yii::$app->request->post())) {
+            $objPeople->prop1 = $model->prop1;
+            $objPeople->prop2 = $model->prop2;
+            $objPeople->prop3 = $model->prop3;
+            $objPeople->prop4 = $model->prop4;
+            $objPeople->prop5 = $model->prop5;
+            $objPeople->prop6 = $model->prop6;
+            $objPeople->prop7 = $model->prop7;
+            $objPeople->save();
+            return $this->redirect(['index', 'id' => 1]);
+
+        }
+        //print_r($objPeople);
         return $this->render('teacherAccount/editsocialmap', [
             'model' => $model,
+            'objPeople' => $objPeople,
          ]);
     }
     
-    public function actionEditbusypeople(){
+    public function actionEditbusypeople($id){
+        $model  = new BusypeopleForm();
+        $objPeople = Peoples::find()->where(['id' => $id])->one();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $objPeople->prop9 = $model->prop9;
+            $objPeople->save();
+            return $this->redirect(['index', 'id' => 1]);
+        }
+
         return $this->render('teacherAccount/editbusypeople', [
             'model' => $model,
+            'objPeople' => $objPeople,
          ]);
     }
 
-    public function actionEditdiary(){
+    public function actionEditdiary($id){
+        // echo $id;
+        $model  = new DiaryForm();
+        $objClass = Classes::find()->where(['id' => $id])->one();
+
+        if ($model->load(Yii::$app->request->post())){
+            $objClass->prop9 = $model->prop9;
+            $objClass->save();
+            return $this->redirect(['index', 'id' => 1]);
+
+        }
         return $this->render('teacherAccount/editdiary', [
             'model' => $model,
+            'objClass' => $objClass,
         ]);
     }
 

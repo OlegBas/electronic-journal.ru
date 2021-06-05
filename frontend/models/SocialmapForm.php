@@ -25,9 +25,9 @@ class SocialmapForm extends Model
     public function rules()
     {
         return [
-            return [
+            
                 [['id','prop1','prop2','prop3','prop4','prop5','prop6','prop7'], 'safe'],
-             ];
+           
         ];
     }
 

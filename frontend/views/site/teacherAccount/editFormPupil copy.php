@@ -1,9 +1,13 @@
+
 <?php
-   use yii\helpers\Url;
-   use yii\helpers\Html;
-   use yii\widgets\Pjax;
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 ?>
 
+<?php $form = ActiveForm::begin() ;
+?>
+<h3>Редактирование карточки ученика</h3>
 <table class="table table-condensed table-hover" id = "infoAboutPeople">
                   <thead>
                      <tr>
@@ -14,15 +18,22 @@
                   <tbody>
                      <tr>
                         <td>ФИО</td>
-                        <td id = "fioPeople"><?=$people->user['fio']?></td>
+                        <td id = "fioPeople">
+                        <?= $form->field($model, 'fio')->textInput(['value' => $model->fio])->label('')?>
+                        </td>
                      </tr>
                      <tr>
                         <td>Дата рождения</td>
-                        <td id = "dateOfBirth"><?=$people->user['dateOfBirth']?></td>
+                        <td id = "dateOfBirth">
+                        <?= $form->field($model, 'dateOfBirth')->input('date',['value' => $model->dateOfBirth])->label('')?>
+                        </td>
                      </tr>
                      <tr>
                         <td>Место жительства</td>
-                        <td><?=$people->user['address']?></td>
+                        <td>
+
+                        <?= $form->field($model, 'address')->textarea()->label('')?>
+                        </td>
                      </tr>
                   </tbody>
                </table>
@@ -37,23 +48,23 @@
                   <tbody>
                      <tr>
                         <td>ФИО</td>
-                        <td><?=$people->parents[0]["fio"]?></td>
-                        <td><?=$people->parents[1]["fio"]?></td>
+                        <td><?= $form->field($model, 'fioFather')->textInput(['value' => $model->fioFather])->label('')?></td>
+                        <td><?= $form->field($model, 'fioMother')->textInput(['value' => $model->fioMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>место работы</td>
-                        <td><?=$people->parents[0]["placeWork"]?></td>
-                        <td><?=$people->parents[1]["placeWork"]?></td>
+                        <td><?= $form->field($model, 'placeWorkFather')->textInput(['value' => $model->placeWorkFather])->label('')?></td>
+                        <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => $model->placeWorkMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>адрес</td>
-                        <td><?=$people->parents[0]["address"]?></td>
-                        <td><?=$people->parents[1]["address"]?></td>
+                        <td><?= $form->field($model, 'addressFather')->textInput(['value' => $model->addressFather])->label('')?></td>
+                        <td><?= $form->field($model, 'addressMother')->textInput(['value' => $model->addressMother])->label('')?></td>
                      </tr>
                      <tr>
                         <td>телефон</td>
-                        <td><?=$people->parents[0]["phone"]?></td>
-                        <td><?=$people->parents[1]["phone"]?></td>
+                        <td><?= $form->field($model, 'phoneFather')->textInput(['value' => $model->phoneFather])->label('')?></td>
+                        <td><?= $form->field($model, 'phoneMother')->textInput(['value' => $model->phoneMother])->label('')?></td>
                      </tr>
                   </tbody>
                </table>
@@ -67,17 +78,17 @@
                   <tbody>
                      <tr>
                         <td>Состав семьи</td>
-                        <td><?=$people->prop8?></td>
+                        <td><?= $form->field($model, 'family')->textarea()->label('')?></td>
                      </tr>
                      <tr>
                         <td>Социальная активность, увлечения, интересы</td>
-                        <td><?=$people->prop9?></td>
+                        <td><?= $form->field($model, 'activity')->textarea()->label('')?></td>
                      </tr>
                   </tbody>
                </table>
                <h3>Характеристика студента</h3>
                <p>
-               <?=$people->prop10?>
+               <?= $form->field($model, 'characteric')->textarea()->label('')?>
                </p>
                <h4>Ведомость</h4>
                <div class="table-responsive ">
@@ -120,5 +131,7 @@
                      </tbody>
                   </table>
                </div>
-               
-               <a href="<?=Url::to(['site/edit','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>
+               <? echo $form->field($model, 'idPeople')->hiddenInput(['value' => $model->idPeople])->label(''); ?>
+               <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary','id' => 'saveForm']) ?>
+ <?php ActiveForm::end() ?>
+      

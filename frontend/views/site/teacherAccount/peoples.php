@@ -3,6 +3,11 @@
    use yii\helpers\Html;
    use yii\widgets\Pjax;
 ?>
+
+<div class="row">
+<a href="<?=Url::to(['site/addpeople','mode' => 'add'])?>" class="btn btn-primary " role="button" >Добавить</a>
+
+</div>
 <div class="row">
 <?php foreach($peoples as $people) {?>
     <div class="col-md-3 card">

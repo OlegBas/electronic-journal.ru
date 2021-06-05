@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
                 <tr>
                   <td><?= $people->id?></td>
                   <td><?=$people->user["fio"]?></td>
-                  <td><?=$people->prop11?></td>
+                  <td><?=$people->prop9?></td>
                   <td>
                   <a href="<?=Url::to(['site/editbusypeople','id' => $people->id])?>" class="btn btn-primary " role="button" >Изменить</a>
                   </td>
