@@ -89,6 +89,12 @@ public function beforeAction($action)
         if($model->fio) $user->fio = $model->fio;
         if($model->dateOfBirth) $user->dateOfBirth = $model->dateOfBirth;
         if($model->email) $user->email = $model->email;
+        if($_FILES['UserForm']['name']['photo']){
+            $model->photo = UploadedFile::getInstance($model, 'photo');
+            $model->upload();
+            $user->photo = $model->photo;
+        }
+        
         if($model->address) $user->address = $model->address;
         if($model->phone) $user->phone = $model->phone;
         if($model->password) $user->password = md5($model->password);

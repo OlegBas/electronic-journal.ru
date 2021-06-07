@@ -12,7 +12,6 @@ body.blank {
   min-height: 100%;
   height: auto;
   margin: 0 auto -60px;
-  padding: 0 0 60px;
 }
 
 body.blank .wrap {
@@ -26,10 +25,6 @@ body.blank .wrap {
 
 body.blank .wrap > div {
   width: 100%;
-}
-
-.wrap > .container {
-  padding: 70px 15px 20px;
 }
 
 .footer {

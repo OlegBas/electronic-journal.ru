@@ -50,10 +50,10 @@ $(function () {
   });
 
   $("#zoomIn").on("click", function () {
-    $("body").attr("style", "font-size:40px");
+    $(".container * ,nav *").attr("style", "font-size:25px");
   });
   $("#zoomOut").on("click", function () {
-    $("body").attr("style", "font-size:14px");
+    $(".container *,nav *").attr("style", "font-size:14px");
   });
   $("#bgBlack").on("click", function () {
     $("body").attr("style", "background-color:#000");

@@ -7,6 +7,11 @@ use yii\widgets\ActiveForm;
                 <div class="col-md-6">
                   <table class = "table">
                     <tr>
+                      <td colspan = "2">
+                        <img src="web/images/teachers/<?=$user->photo?>" alt="" id = 'photo'>
+                      </td>
+                    </tr>
+                    <tr>
                       <td><b>ФИО</b></td>
                       <td><?=$user->fio?></td>
                       
@@ -46,15 +51,14 @@ use yii\widgets\ActiveForm;
                           <h4 class="modal-title">Личный данные/Изменить</h4>
                         </div>
                         <div class="modal-body">
-                          <?php $form = ActiveForm::begin([
-                            'id' => 'lkdata-form',
-                          ]) ?>
+                          <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
                             <?= $form->field($model, 'fio')->textInput(['placeholder' => 'Введите ФИО','value' => $user->fio])?>
                             <?= $form->field($model, 'dateOfBirth')->textInput(['type' => 'date','value' => $user->dateOfBirth]) ?>
                             <?= $form->field($model, 'email')->textInput(['type' => 'email','value' => $user->email]) ?>
                             <?= $form->field($model, 'address')->textInput(['type' => 'text','value' => $user->address]) ?>
                             <?= $form->field($model, 'phone')->textInput(['type' => 'tel','value' => $user->phone]) ?>
                             <?= $form->field($model, 'password')->input('password') ?>
+                            <?= $form->field($model, 'photo')->fileInput()?>
                             <?= $form->field($model, 'id')->textInput(['type' => 'hidden','value' => $user->id])->label('') ?>
                             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
                           <?php ActiveForm::end() ?>

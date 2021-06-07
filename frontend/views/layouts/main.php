@@ -26,28 +26,12 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-<style>
-#version{
-    border:1px solid red;
-    width: 100%;
-    height: 50px;
-    top:0;
-    left:0;
-    background:red;
-    display: none;
-}
-</style>
 <div class="wrap">
-<div id = "version" >
-<button type="button" class="btn btn-primary" id = "zoomIn">Увеличить</button>
-<button type="button" class="btn btn-primary" id = "zoomOut">Уменьшить</button>
-<button type="button" class="btn btn-primary" id = "bgBlack">Темный фон</button>
-<button type="button" class="btn btn-primary" id = "bgWhite">Белый фон</button>
-</div>
-<button type="button" class="btn btn-primary" id = "toggleVersion">Версия для слабовидящих</button>
+
+
     <?php
     NavBar::begin([
-        'brandLabel' => "Электронный журнал",   
+        'brandLabel' => "Электронный журнал классного руководителя",   
         'options' => [
             'class' => 'navbar-inverse ',
         ],
@@ -78,6 +62,13 @@ AppAsset::register($this);
     <div class="container">
        
         <?= Alert::widget() ?>
+        <button type="button" class="btn btn-primary" id = "toggleVersion">Версия для слабовидящих</button>
+        <div id = "version" >
+            <button type="button" class="btn btn-primary" id = "zoomIn">Увеличить</button>
+            <button type="button" class="btn btn-primary" id = "zoomOut">Уменьшить</button>
+            <button type="button" class="btn btn-primary" id = "bgBlack">Темный фон</button>
+            <button type="button" class="btn btn-primary" id = "bgWhite">Белый фон</button>
+        </div>
         <?= $content ?>
     </div>
 </div>

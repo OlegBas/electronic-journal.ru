@@ -38,6 +38,20 @@ class UserForm extends Model
             'password' => 'Пароль',
             'address' => 'Адрес',
             'phone' => 'Телефон',
+            'photo' => 'Фото',
         ];
+    }
+
+
+    public function upload()
+    {
+        // echo "upload";
+        if ($this->validate()) {
+            $this->photo->saveAs('web/images/teachers/' . $this->photo->baseName . '.' . $this->photo->extension);
+            return true;
+        } else {
+            // print_r($this->errors);
+            return false;
+        }
     }
 }
