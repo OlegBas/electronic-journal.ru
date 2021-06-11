@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
 
-$this->title = 'Обновить пользователя: ' . $model->id;
+$this->title = 'Обновить информацию: пользователь ' . $model->fio;
 $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Обновить';
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = 'Обновить';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'create' => false,
+        'classes' => $classes,
     ]) ?>
 
 </div>

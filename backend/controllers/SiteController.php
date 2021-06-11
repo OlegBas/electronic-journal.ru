@@ -12,6 +12,17 @@ use common\models\LoginForm;
  */
 class SiteController extends Controller
 {
+
+    public function beforeAction($action)
+    {
+        Yii::$app->session->set('role','admin');
+        // if($action->id = 'index') return $this->redirect(['user/index']);
+        // return parent::beforeAction($action);
+        if(!Yii::$app->user->isGuest && Yii::$app->controller->id == 'site'){
+            return $this->redirect(['user/index']);
+        }
+        return parent::beforeAction($action);
+    }
     /**
      * {@inheritdoc}
      */

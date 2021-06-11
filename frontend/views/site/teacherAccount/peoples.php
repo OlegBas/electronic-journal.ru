@@ -16,6 +16,7 @@
             src="<?=($people->user['photo'])  ? 'web/images/'.$people->user['photo'] : ' https://www.mikrox.com.tr/wp-content/uploads/2020/07/canlidestek.jpeg'?>"
             alt="..."
             class="img-circle"
+            style = 'width:200px;height:200px'
         />
         <div class="caption">
             <h3><?=$people->user['fio']?></h3>

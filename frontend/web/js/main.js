@@ -39,6 +39,7 @@
 
 $(function () {
   let isVersionShow = false;
+  $("#version").hide();
   $("#toggleVersion").on("click", function () {
     if (!isVersionShow) {
       $("#version").show();

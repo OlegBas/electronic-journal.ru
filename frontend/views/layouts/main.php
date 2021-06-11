@@ -28,10 +28,9 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="wrap">
 
-
     <?php
     NavBar::begin([
-        'brandLabel' => "Электронный журнал классного руководителя",   
+        'brandLabel' => "<div><img style = 'width:44px;height:35px' src = 'https://sun9-17.userapi.com/impg/7pspZCW_4cm82coEjhmeikhE1ddcaYCE8eWbrQ/E11auozKUC8.jpg?size=348x272&quality=96&sign=101e64ac95a3ef8ba822bdee34a45f5e&type=album'> Электронный журнал классного руководителя</div>",   
         'options' => [
             'class' => 'navbar-inverse ',
         ],

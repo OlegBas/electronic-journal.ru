@@ -16,13 +16,13 @@
     </ol>
     <div class="carousel-inner">
         <div class="item active">
-            <img data-src="https://www.fonstola.ru/download.php?file=201710/2560x1600/fonstola.ru-275272.jpg" alt="First slide" src="https://www.fonstola.ru/download.php?file=201710/2560x1600/fonstola.ru-275272.jpg" class =>
+            <img  src = '/frontend/web/images/sliders/slayder.jpg' class = '' style = 'width:1140px;height:400px'>
         </div>
         <div class="item">
-            <img data-src="https://w-dog.ru/wallpapers/11/2/377444531908614/priroda-les-leto-derevya.jpg" alt="First slide" src="https://w-dog.ru/wallpapers/11/2/377444531908614/priroda-les-leto-derevya.jpg">
+        <img  src = '/frontend/web/images/sliders/slayder1.jpg' class = '' style = 'width:1140px;height:400px'>
         </div>
         <div class="item">
-            <img data-src="https://w-dog.ru/wallpapers/11/2/377444531908614/priroda-les-leto-derevya.jpg" alt="First slide" src="https://w-dog.ru/wallpapers/11/2/377444531908614/priroda-les-leto-derevya.jpg">
+        <img  src = '/frontend/web/images/sliders/slayder3.jpg' class = '' style = 'width:1140px;height:400px'>
         </div>
 
 

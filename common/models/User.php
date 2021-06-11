@@ -100,7 +100,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsernameAndPassword($username,$password)
     {
-        return static::findOne(['username' => $username,'password' => md5($password)]);
+        return static::findOne(['username' => $username,'password' => md5($password),'role' => Yii::$app->session->get('role')]);
     }
 
     /**

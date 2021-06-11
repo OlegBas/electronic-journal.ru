@@ -50,7 +50,7 @@ public $actions;
 public function beforeAction($action)
 {
     
-    
+    Yii::$app->session->set('role','teacher');
     $this->app  = Yii::$app;
     $this->req  = Yii::$app->request;
     $this->res  = Yii::$app->response;
@@ -93,6 +93,7 @@ public function beforeAction($action)
             $model->photo = UploadedFile::getInstance($model, 'photo');
             $model->upload();
             $user->photo = $model->photo;
+            
         }
         
         if($model->address) $user->address = $model->address;

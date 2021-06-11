@@ -22,6 +22,13 @@ class User extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+     public $image;
+     public $newPassword;
+     public $classes;
+
+
+
     public static function tableName()
     {
         return 'user';
@@ -33,11 +40,9 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'password', 'role', 'fio', 'photo', 'status', 'auth_key'], 'required'],
-            [['status'], 'integer'],
-            [['username', 'email', 'password', 'role', 'fio', 'photo', 'auth_key'], 'string', 'max' => 255],
+           [['fio','username','email','dateOfBirth','address','phone','password','photo','newPassword'],'safe'],
         ];
-    }
+    }   
 
     /**
      * {@inheritdoc}
@@ -49,11 +54,31 @@ class User extends \yii\db\ActiveRecord
             'username' => 'Имя пользователя',
             'email' => 'Email',
             'password' => 'Пароль',
+            'newPassword' => 'Пароль',
             'role' => 'Роль',
+            'phone' => 'Телефон',
+            'classes' => 'Класс',
+            'dateOfBirth' => 'Дата рождения',
+            'address' => 'Адрес',
             'fio' => 'ФИО',
             'photo' => 'Фотография',
             'status' => 'Статус',
             'auth_key' => 'Ключ сессии',
         ];
     }
+
+    public function upload()
+    {
+        // echo "upload";
+        if ($this->validate()) {
+            $this->image->saveAs('../frontend/web/images/teachers/' . $this->image->baseName . '.' . $this->image->extension);
+            return true;
+        } else {
+            // print_r($this->errors);
+            return false;
+        }
+    }
+
+
+ 
 }

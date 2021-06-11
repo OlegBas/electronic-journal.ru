@@ -5,15 +5,20 @@ namespace backend\controllers;
 use Yii;
 use backend\models\User;
 use backend\models\UserSearch;
+use frontend\models\Classes;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\ArrayHelper;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
 class UserController extends Controller
 {
+
+    public $classes; 
     /**
      * {@inheritdoc}
      */
@@ -62,16 +67,39 @@ class UserController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+
+    private function getClasses(){
+        $classes = Classes::find()->all();
+        return  ArrayHelper::map($classes,'id','title');
+    }
+
+
     public function actionCreate()
     {
+        $this->getClasses();
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            if($_FILES['User']['name']['photo']){
+
+                $model->image = UploadedFile::getInstance($model, 'photo');
+                $model->upload();
+                $model->role = 'teacher';
+                $model->password = md5($model->password);
+                $model->photo = $model->image->name;
+            }
+            $model->save();
+            $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
+            $objClass->idClRuk = $model->id;
+            $objClass->save();
+          
+        return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'classes' => $this->getClasses(),
         ]);
     }
 
@@ -84,14 +112,42 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->getClasses();
         $model = $this->findModel($id);
+        $oldPhoto = $model->photo;
+        if ($model->load(Yii::$app->request->post())) {
+            if($_FILES['User']['name']['photo']){
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $model->image = UploadedFile::getInstance($model, 'photo');
+                $model->upload();
+                $model->photo = $model->image->name;
+
+            }
+            else $model->photo = $oldPhoto;
+        
+            if($model->newPassword){
+                $model->password = md5($model->newPassword);
+            } 
+            // print_r($model->id);
+            $model->save();
+            
+            $objClass = Classes::find()->where(['idClRuk' => $model->id])->one();
+            $objClass->idClRuk = 0;
+            $objClass->save();
+            $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
+            $objClass->idClRuk = $model->id;
+            $objClass->save();
+            
+            
+            
             return $this->redirect(['view', 'id' => $model->id]);
+            
+
         }
 
         return $this->render('update', [
             'model' => $model,
+            'classes' => $this->getClasses(),
         ]);
     }
 

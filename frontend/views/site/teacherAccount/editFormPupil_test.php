@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
                      <tr>
                         <td>ФИО</td>
                         <td id = "fioPeople">
-                        <?= $form->field($model, 'fio')->textInput(['value' => $model->fio])->label('')?>
+                        <?= $form->field($model, 'fio')->textInput(['value' => ($model->fio) ? $model->fio : 'Иванов Сергей Петрович'])->label('')?>
                         </td>
                      </tr>
                      <?php if(isset($addPeople)) {?>
@@ -48,14 +48,14 @@ use yii\widgets\ActiveForm;
                      <tr>
                         <td>Дата рождения</td>
                         <td id = "dateOfBirth">
-                        <?= $form->field($model, 'dateOfBirth')->input('date',['value' => $model->dateOfBirth])->label('')?>
+                        <?= $form->field($model, 'dateOfBirth')->input('date',['value' => ($model->dateOfBirth) ? $model->dateOfBirth : '1980-12-31' ])->label('')?>
                         </td>
                      </tr>
                      <tr>
                         <td>Место жительства</td>
                         <td>
 
-                        <?= $form->field($model, 'address')->textarea(['value' => $model->address])->label('')?>
+                        <?= $form->field($model, 'address')->textarea(['value' => ($model->address) ? $model->address : 'ул. Строителей д.6 кв. 10'])->label('')?>
                         </td>
                      </tr>
                   </tbody>
@@ -71,23 +71,23 @@ use yii\widgets\ActiveForm;
                   <tbody>
                      <tr>
                         <td>ФИО</td>
-                        <td><?= $form->field($model, 'fioFather')->textInput(['value' => $model->fioFather ])->label('')?></td>
-                        <td><?= $form->field($model, 'fioMother')->textInput(['value' => $model->fioMother])->label('')?></td>
+                        <td><?= $form->field($model, 'fioFather')->textInput(['value' => ($model->fioFather) ? $model->fioFather : 'Иванов Александр Васильевич'])->label('')?></td>
+                        <td><?= $form->field($model, 'fioMother')->textInput(['value' => ($model->fioMother) ? $model->fioMother : 'Иванова Марина Васильевна'])->label('')?></td>
                      </tr>
                      <tr>
                         <td>место работы</td>
-                        <td><?= $form->field($model, 'placeWorkFather')->textInput(['value' => $model->placeWorkFather])->label('')?></td>
-                        <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => $model->placeWorkMother])->label('')?></td>
+                        <td><?= $form->field($model, 'placeWorkFather')->textInput(['value' => ($model->placeWorkFather) ? $model->placeWorkFather : 'ул. Кривая д.6'])->label('')?></td>
+                        <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => ($model->placeWorkMother) ? $model->placeWorkMother : 'ул. Кривая д.7'])->label('')?></td>
                      </tr>
                      <tr>
                         <td>адрес</td>
-                        <td><?= $form->field($model, 'addressFather')->textInput(['value' => $model->addressFather])->label('')?></td>
-                        <td><?= $form->field($model, 'addressMother')->textInput(['value' => $model->addressMother])->label('')?></td>
+                        <td><?= $form->field($model, 'addressFather')->textInput(['value' => ($model->addressFather) ? $model->addressFather : 'ул. Береговая д.6 кв. 15'])->label('')?></td>
+                        <td><?= $form->field($model, 'addressMother')->textInput(['value' => ($model->addressMother) ? $model->addressFather : 'ул. Береговая д.6 кв. 15'])->label('')?></td>
                      </tr>
                      <tr>
                         <td>телефон</td>
-                        <td><?= $form->field($model, 'phoneFather')->textInput(['value' => $model->phoneFather])->label('')?></td>
-                        <td><?= $form->field($model, 'phoneMother')->textInput(['value' => $model->phoneMother])->label('')?></td>
+                        <td><?= $form->field($model, 'phoneFather')->textInput(['value' => ($model->phoneFather) ? $model->phoneFather : '345678'])->label('')?></td>
+                        <td><?= $form->field($model, 'phoneMother')->textInput(['value' => ($model->phoneMother) ? $model->phoneMother : '24343' ])->label('')?></td>
                      </tr>
                   </tbody>
                </table>
@@ -101,17 +101,17 @@ use yii\widgets\ActiveForm;
                   <tbody>
                      <tr>
                         <td>Состав семьи</td>
-                        <td><?= $form->field($model, 'family')->textarea(['value' =>$model->family])->label('')?></td>
+                        <td><?= $form->field($model, 'family')->textarea(['value' => ($model->family) ? $model->family : 'браться'])->label('')?></td>
                      </tr>
                      <tr>
                         <td>Социальная активность, увлечения, интересы</td>
-                        <td><?= $form->field($model, 'activity')->textarea(['value' => $model->activity])->label('')?></td>
+                        <td><?= $form->field($model, 'activity')->textarea(['value' => ($model->activity) ? $model->activity : 'нет'])->label('')?></td>
                      </tr>
                   </tbody>
                </table>
                <h3>Характеристика студента</h3>
                <p>
-               <?= $form->field($model, 'characteric')->textarea(['value' => $model->characteric])->label('')?>
+               <?= $form->field($model, 'characteric')->textarea(['value' => ($model->characteric) ? $model->characteric : 'отсутствует'])->label('')?>
                </p>
                <h4>Ведомость</h4>
                <div class="table-responsive ">

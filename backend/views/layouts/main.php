@@ -30,15 +30,12 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => 'Админ-панель',
-        'brandUrl' => '',
+        'brandUrl' => ['/user/'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Главная', 'url' => ['/site/index']],
-        ['label' => 'Предметы', 'url' => ['/subject/']],
-        ['label' => 'Оценки', 'url' => ['/grade/']],
         ['label' => 'Пользователи', 'url' => ['/user/']],
     ];
     if (Yii::$app->user->isGuest) {

@@ -41,7 +41,6 @@ a {
 }
 
 #version {
-  border: 1px solid #72abe6;
   width: 100%;
   height: 50px;
   top: 0;
@@ -50,6 +49,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#toggleVersion {
+  display: block;
+  margin: 0 auto;
 }
 
 #photo {

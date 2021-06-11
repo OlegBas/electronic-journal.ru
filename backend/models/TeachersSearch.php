@@ -60,6 +60,7 @@ class TeachersSearch extends Teachers
         $query->andFilterWhere([
             'id' => $this->id,
             'dateOfBirth' => $this->dateOfBirth,
+
             'idSubject' => $this->idSubject,
         ]);
 

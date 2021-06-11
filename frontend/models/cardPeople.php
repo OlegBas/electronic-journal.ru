@@ -42,7 +42,7 @@ class cardPeople extends Model
     {
         return [
             // username and password are both required
-            [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
+            [['fio', 'dateOfBirth', 'address', 'family', 'activity', 'characteric'], 'required','message' => 'Заполните поле "{attribute}"! '],
             [['fio', 'dateOfBirth', 'address', 'fioMother', 'fioFather', 'placeWorkMother', 'placeWorkFather', 'addressMother', 'addressFather','phoneMother', 'phoneFather', 'family', 'activity', 'characteric','gender','photo'], 'safe'],
 
         ];
