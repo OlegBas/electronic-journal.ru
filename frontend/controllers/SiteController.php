@@ -50,19 +50,15 @@ public $actions;
 public function beforeAction($action)
 {
     
-    Yii::$app->session->set('role','teacher');
+    
     $this->app  = Yii::$app;
     $this->req  = Yii::$app->request;
     $this->res  = Yii::$app->response;
     $this->authUser  = Yii::$app->user->identity;
-    $publicActions = ['login','request-password-reset','reset-password',''];
-    if(!in_array($action->id,$publicActions)){
-        if (Yii::$app->user->isGuest) 
-            return $this->redirect(['site/login']);
-    }
+    Yii::$app->session->set('role','teacher');
+    Yii::$app->session->set('idClass',$this->authUser->classes->id);
     
     return parent::beforeAction($action);
-     
 }
 
     
@@ -135,7 +131,11 @@ public function beforeAction($action)
 
     public function actionIndex()
     {
-        $people = Peoples::find()->where(['id' => 1])->one();
+        // echo "index page";
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
+        $peoples = Peoples::find()->where(['idClass' => Yii::$app->session->get('idClass')])->all();
         $subjects = Subject::find()->all();
         $actions = $this->listActions();
         $model  = new UserForm();
@@ -148,7 +148,7 @@ public function beforeAction($action)
             'user' => $this->authUser,
             'nameTemplateLkInfoOnRole' => $this->getNameTemplateLkInfoOnRole(),
             'actions' => $actions,
-            'peoples' => Peoples::find()->all(),
+            'peoples' => Peoples::find()->where(['idClass' => Yii::$app->session->get('idClass')])->all(),
             'model' => $model,
             'subjects' => $subjects 
         ]); 
@@ -221,8 +221,8 @@ public function beforeAction($action)
 
         if($isNew){
             $people->idusers = $idUser;
-            $people->idClRuk = 18;
-            $people->idClass = 1;
+            $people->idClRuk = $this->authUser->id;
+            $people->idClass = Yii::$app->session->get('idClass');
             $people->gender = $model->gender;
         }
 

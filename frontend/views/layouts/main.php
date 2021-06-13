@@ -58,16 +58,16 @@ AppAsset::register($this);
     NavBar::end();
     ?> 
 
-    <div class="container">
+    <div class="container " id = "contentPage">
        
         <?= Alert::widget() ?>
         <button type="button" class="btn btn-primary" id = "toggleVersion">Версия для слабовидящих</button>
         <div id = "version" >
             <button type="button" class="btn btn-primary" id = "zoomIn">Увеличить</button>
             <button type="button" class="btn btn-primary" id = "zoomOut">Уменьшить</button>
-            <button type="button" class="btn btn-primary" id = "bgBlack">Темный фон</button>
-            <button type="button" class="btn btn-primary" id = "bgWhite">Белый фон</button>
+            <!-- <button type="button" class="btn btn-primary" id = "bgWhite">Белый фон</button> -->
         </div>
+        
         <?= $content ?>
     </div>
 </div>

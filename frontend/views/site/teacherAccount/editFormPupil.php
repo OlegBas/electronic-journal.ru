@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<button type="button" class="btn btn-primary buttonBack">Назад</button>
 
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
 ?>

@@ -16,7 +16,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'classes')->dropDownList([$classes])?>
     <?= $form->field($model, 'dateOfBirth')->textInput(['type' => 'date']) ?>
     <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'phone')->textInput() ?>

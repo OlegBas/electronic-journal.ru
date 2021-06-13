@@ -4,7 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-
+<button type="button" class="btn btn-primary buttonBack">Назад</button>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
 ?>
 <?php if(isset($addPeople)) {?>
@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 <?php } else {?>
 <h3>Редактирование карточки ученика</h3>
 <?php }?>
+
 <table class="table table-condensed table-hover" id = "infoAboutPeople">
                   <thead>
                      <tr>

@@ -1,43 +1,20 @@
-// $(function () {
-//   let addressApp = "http://electronic-journal.ru:81/frontend/";
-//   function cutomAjax(stringJson, id, action, func) {
-//     $.ajax({
-//       type: "GET",
-//       url: addressApp + "?r=site/" + action + "&id=" + id,
-//       data: stringJson,
-//       success: function (response) {
-//         func(response);
-//       },
-//     });
-//   }
-
-//   $(".linkAboutPeople").on("click", function (e) {
-//     let id = $(this).attr("data-id");
-//     let editCeil = false;
-
-//     cutomAjax("{}", id, "people", function (response) {
-//       $("#aboutPeople .modal-body").empty();
-//       $("#aboutPeople .modal-body").append(response);
-//     });
-//     e.preventDefault();
-//   });
-
-//   $(document).on("click", "#editAboutPeople", function (e) {
-//     let id = $(this).attr("data-id");
-//     cutomAjax("{}", id, "edit", function (response) {
-//       $("#aboutPeople .modal-body").empty();
-//       $("#aboutPeople .modal-body").append(response);
-//     });
-//     e.preventDefault();
-//   });
-
-//   $(document).on("click", "#saveForm", function (e) {
-
-//     e.preventDefault();
-//   });
-// });
 
 $(function () {
+
+  $(".buttonBack").on("click", function (e) {
+    history.back();
+  });
+  // console.log('Активная вкладка'+localStorage.getItem('activeTab'));
+  $("a[href='"+localStorage.getItem('activeTab')+"']").tab('show');
+
+
+  $('[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    let hrefActiveTab = $(e.target).attr('href'); // активная вкладка
+    localStorage.setItem('activeTab',hrefActiveTab);
+    console.log('Активирована новая вкладка '+hrefActiveTab);
+  });
+
+
   let isVersionShow = false;
   $("#version").hide();
   $("#toggleVersion").on("click", function () {
@@ -51,13 +28,10 @@ $(function () {
   });
 
   $("#zoomIn").on("click", function () {
-    $(".container * ,nav *").attr("style", "font-size:25px");
+    $("#contentPage p,#contentPage  a, td,th").attr("style", "font-size:25px");
   });
   $("#zoomOut").on("click", function () {
-    $(".container *,nav *").attr("style", "font-size:14px");
-  });
-  $("#bgBlack").on("click", function () {
-    $("body").attr("style", "background-color:#000");
+    $("#contentPage p,#contentPage  a, td,th").attr("style", "font-size:14px");
   });
   $("#bgWhite").on("click", function () {
     $("body").attr("style", "background-color:#fff");

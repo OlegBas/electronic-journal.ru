@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
+
+<button type="button" class="btn btn-primary buttonBack">Назад</button>
+
 <?php $form = ActiveForm::begin()?>
 <?= $form->field($model, 'year')->textInput(['value' => 2021,'disabled' => true])?>
 <?= $form->field($model, 'idClRuk')->dropDownList($allClRuks, [

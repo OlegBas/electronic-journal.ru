@@ -29,6 +29,10 @@ use yii\widgets\ActiveForm;
                       <td><?=$user->address?></td>
                     </tr>
                     <tr>
+                      <td><b>Класс</b></td>
+                      <td><?=$user->classes->title?></td>
+                    </tr>
+                    <tr>
                       <td><b>Номер телефона:</b></td>
                       <td>
                       <?=$user->phone?>

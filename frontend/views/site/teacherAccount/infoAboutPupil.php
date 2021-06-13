@@ -4,6 +4,7 @@
    use yii\widgets\Pjax;
 ?>
 
+<button type="button" class="btn btn-primary buttonBack">Назад</button>
 <table class="table table-condensed table-hover" id = "infoAboutPeople">
                   <thead>
                      <tr>

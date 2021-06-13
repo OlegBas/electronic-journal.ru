@@ -3,7 +3,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
-
+<button type="button" class="btn btn-primary buttonBack">Назад</button>
 <?php $form = ActiveForm::begin()?>
 <?= $form->field($model, 'fio')->textInput(['value' => $objPeople->user['fio'],'disabled' => true])?>
 <?= $form->field($model, 'prop9')->textInput(['value' => $objPeople->prop9])?>

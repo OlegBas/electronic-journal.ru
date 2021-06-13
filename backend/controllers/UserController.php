@@ -69,7 +69,7 @@ class UserController extends Controller
      */
 
     private function getClasses(){
-        $classes = Classes::find()->all();
+        $classes = Classes::find()->where(['idClRuk' => 0])->all();
         return  ArrayHelper::map($classes,'id','title');
     }
 
@@ -128,21 +128,21 @@ class UserController extends Controller
             if($model->newPassword){
                 $model->password = md5($model->newPassword);
             } 
-            // print_r($model->id);
+        
+            // print_r($model);
+            // // print_r($model->id);
+            
+            // print_r($model);
+            // $objClass = Classes::find()->where(['idClRuk' => $model->id])->one();
+            // $objClass->idClRuk = 0;
+            // $objClass->save();
+            // $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
+            // $objClass->idClRuk = $model->id;
+            // $objClass->save();
+            
+            
             $model->save();
-            
-            $objClass = Classes::find()->where(['idClRuk' => $model->id])->one();
-            $objClass->idClRuk = 0;
-            $objClass->save();
-            $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
-            $objClass->idClRuk = $model->id;
-            $objClass->save();
-            
-            
-            
             return $this->redirect(['view', 'id' => $model->id]);
-            
-
         }
 
         return $this->render('update', [
