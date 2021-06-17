@@ -78,6 +78,11 @@ class UserController extends Controller
     {
         $this->getClasses();
         $model = new User();
+        // $model->fio = 'Иванов Петр';
+        // $model->address = '------';
+        // $model->dateOfBirth = '1996-03-31';
+        // $model->save();
+
 
         if ($model->load(Yii::$app->request->post()) ) {
 
@@ -89,13 +94,22 @@ class UserController extends Controller
                 $model->password = md5($model->password);
                 $model->photo = $model->image->name;
             }
+            // $model->fio = 'Иванов Петр';
+            // $model->address = '------';
+            // $model->dateOfBirth = '1996-03-31';
+            
+            
+            // $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
+            // $objClass->idClRuk = $model->id;
+            // $objClass->save();
+            // print_r($model);
+            // if($model->save()) echo "Success";
+            // else print_r($model);
+            $model->role = 'teacher';
             $model->save();
-            $objClass = Classes::find()->where(['id' => $_POST['User']['classes']])->one();
-            $objClass->idClRuk = $model->id;
-            $objClass->save();
-          
-        return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+        
 
         return $this->render('create', [
             'model' => $model,

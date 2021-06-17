@@ -62,3 +62,13 @@ a {
   display: block;
   margin: 0 auto;
 }
+
+
+#logo{
+    width: 126px;
+    height: 51px;
+}
+
+#logoBlock{
+  margin-bottom: 20px;
+}

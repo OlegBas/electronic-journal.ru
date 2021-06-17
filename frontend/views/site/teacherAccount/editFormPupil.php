@@ -53,7 +53,13 @@ use yii\widgets\ActiveForm;
                         </td>
                      </tr>
                      <tr>
-                        <td>Место жительства</td>
+                        <td>Телефон</td>
+                        <td id = "dateOfBirth">
+                        <?= $form->field($model, 'phone')->input('tel',['value' => $model->phone])->label('')?>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Место жительство</td>
                         <td>
 
                         <?= $form->field($model, 'address')->textarea(['value' => $model->address])->label('')?>
@@ -81,7 +87,7 @@ use yii\widgets\ActiveForm;
                         <td><?= $form->field($model, 'placeWorkMother')->textInput(['value' => $model->placeWorkMother])->label('')?></td>
                      </tr>
                      <tr>
-                        <td>адрес</td>
+                        <td>место жительство</td>
                         <td><?= $form->field($model, 'addressFather')->textInput(['value' => $model->addressFather])->label('')?></td>
                         <td><?= $form->field($model, 'addressMother')->textInput(['value' => $model->addressMother])->label('')?></td>
                      </tr>

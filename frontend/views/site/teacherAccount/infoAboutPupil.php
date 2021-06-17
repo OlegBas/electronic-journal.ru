@@ -22,7 +22,11 @@
                         <td id = "dateOfBirth"><?=$people->user['dateOfBirth']?></td>
                      </tr>
                      <tr>
-                        <td>Место жительства</td>
+                        <td>Телефон</td>
+                        <td id = "dateOfBirth"><?=$people->user['phone']?></td>
+                     </tr>
+                     <tr>
+                        <td>Место жительство</td>
                         <td><?=$people->user['address']?></td>
                      </tr>
                   </tbody>
@@ -47,7 +51,7 @@
                         <td><?=$people->parents[1]["placeWork"]?></td>
                      </tr>
                      <tr>
-                        <td>адрес</td>
+                        <td>Место жительство</td>
                         <td><?=$people->parents[0]["address"]?></td>
                         <td><?=$people->parents[1]["address"]?></td>
                      </tr>

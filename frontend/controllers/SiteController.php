@@ -50,18 +50,19 @@ public $actions;
 public function beforeAction($action)
 {
     
-    
+
     $this->app  = Yii::$app;
     $this->req  = Yii::$app->request;
     $this->res  = Yii::$app->response;
     $this->authUser  = Yii::$app->user->identity;
     Yii::$app->session->set('role','teacher');
     Yii::$app->session->set('idClass',$this->authUser->classes->id);
-    
+
     return parent::beforeAction($action);
 }
 
-    
+
+
 
     /**
      * {@inheritdoc}
@@ -89,7 +90,7 @@ public function beforeAction($action)
             $model->photo = UploadedFile::getInstance($model, 'photo');
             $model->upload();
             $user->photo = $model->photo;
-            
+
         }
         
         if($model->address) $user->address = $model->address;
@@ -131,7 +132,9 @@ public function beforeAction($action)
 
     public function actionIndex()
     {
+        //  echo "index page";
         // echo "index page";
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         }
@@ -175,6 +178,7 @@ public function beforeAction($action)
         $model->fio = $people->user['fio'];
         $model->dateOfBirth = $people->user['dateOfBirth'];
         $model->address = $people->user['address'];
+        $model->phone = $people->user['phone'];
         $model->fioMother = $people->parents[1]['fio'];
         $model->fioFather = $people->parents[0]['fio'];
         $model->placeWorkMother = $people->parents[1]['placeWork'];
@@ -215,6 +219,7 @@ public function beforeAction($action)
         }
         $user->dateOfBirth = $model->dateOfBirth;
         $user->address = $model->address;
+        $user->phone = $model->phone;
         $user->save();
         $idUser= Yii::$app->db->getLastInsertID();
 

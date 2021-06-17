@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\User */
 
 $this->title = $model->fio;
-$this->params['breadcrumbs'][] = ['label' => 'Информация о пользователе', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Информация о классном руководителе', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
