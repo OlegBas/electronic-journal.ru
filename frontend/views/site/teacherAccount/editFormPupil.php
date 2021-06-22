@@ -116,7 +116,7 @@ use yii\widgets\ActiveForm;
                      </tr>
                   </tbody>
                </table>
-               <h3>Характеристика студента</h3>
+               <h3>Характеристика ученика</h3>
                <p>
                <?= $form->field($model, 'characteric')->textarea(['value' => $model->characteric])->label('')?>
                </p>
